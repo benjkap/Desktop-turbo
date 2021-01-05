@@ -10,7 +10,7 @@ export class AuthService {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    protected bddService: BddService,
+    //protected bddService: BddService
   ) {
 
   }
@@ -21,9 +21,9 @@ export class AuthService {
 
     // demo de recup
 
-    this.bddService.get('user').then((result: any) => {
-      console.log(result);
-    });
+    // this.bddService.get('user').then((result: any) => {
+    //   console.log(result);
+    // });
 
     // ici on verirfie en bdd le mdp ect...
 
