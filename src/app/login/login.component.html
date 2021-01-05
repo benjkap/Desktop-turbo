@@ -1,0 +1,30 @@
+<div class="col-md-3 col-md-offset-3 mx-auto text-center mt-5">
+  <div class="login-wrapper">
+    <img class="w-50"
+         src="https://www.mesmarques-enbourse.com/wp-content/themes/mes-marques-en-bourse/logos/600x600/40000009556.jpg"
+         alt="..."/>
+    <h2 class="mb-4">Page de connexion</h2>
+    <form name="formLogin" (ngSubmit)="login(f)" #f="ngForm" novalidate>
+      <div class="form-group mt-3">
+        <label for="username">Identifiant</label>
+        <input type="text" class="form-control" name="username" id="username"
+               placeholder='Saisissez votre identifiant' required ngModel/>
+      </div>
+      <div class="form-group mt-3">
+        <label for="password">Mot de passe</label>
+        <input type="password" class="form-control" name="password" id="password"
+               placeholder='Saisissez votre mot de passe' required ngModel/>
+      </div>
+      <div class="checkbox mt-3"><label class="m-0"><input name="remember" type="checkbox" value="remember-me" ngModel> Se souvenir de moi </label>
+      </div>
+      <div class="form-group mt-3">
+        <button class="btn btn-primary mt-2  btn-block" [disabled]="!f.form.valid">Connexion</button>
+      </div>
+    </form>
+    <div routerLinkActive="active">
+      <a routerLink="/register">Se connecter</a>
+    </div>
+  </div>
+</div>
+
+
