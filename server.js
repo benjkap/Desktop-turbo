@@ -1,27 +1,27 @@
 // Use Express
-var express = require("express");
+let express = require("express");
 // Use body-parser
-var bodyParser = require("body-parser");
+let bodyParser = require("body-parser");
 // Use MongoDB
-var mongodb = require("mongodb");
-var ObjectID = mongodb.ObjectID;
+let mongodb = require("mongodb");
+let ObjectID = mongodb.ObjectID;
 // The database variable
-var database;
+let database;
 // The products collection
-var PRODUCTS_COLLECTION = "products";
+let PRODUCTS_COLLECTION = "products";
 
 // Create new instance of the express server
-var app = express();
+let app = express();
 
-// Define the JSON parser as a default way 
-// to consume and produce data through the 
+// Define the JSON parser as a default way
+// to consume and produce data through the
 // exposed APIs
 app.use(bodyParser.json());
 
 // Create link to Angular build directory
 // The `ng build` command will save the result
 // under the `dist` folder.
-var distDir = __dirname + "/dist/";
+let distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 
 // Local database URI.
@@ -47,8 +47,8 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || LOCAL_DATABASE,
         console.log("Database connection done.");
 
         // Initialize the app.
-        var server = app.listen(process.env.PORT || LOCAL_PORT, function () {
-            var port = server.address().port;
+        let server = app.listen(process.env.PORT || LOCAL_PORT, function () {
+            let port = server.address().port;
             console.log("App now running on port", port);
         });
     });
@@ -78,7 +78,7 @@ app.get("/api/products", function (req, res) {
  *   POST: creates a new product
  */
 app.post("/api/products", function (req, res) {
-    var product = req.body;
+    let product = req.body;
 
     if (!product.name) {
         manageError(res, "Invalid product input", "Name is mandatory.", 400);

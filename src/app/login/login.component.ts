@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import '@angular/compiler';
 import {AuthService} from '../service/auth/auth.service';
 import {NgForm} from '@angular/forms';
 import Swal from 'sweetalert2';
