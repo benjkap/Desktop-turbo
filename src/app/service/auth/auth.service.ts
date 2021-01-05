@@ -1,10 +1,5 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import * as mongoose from 'mongoose';
-
-
-
-
 
 @Injectable()
 export class AuthService {
@@ -16,7 +11,6 @@ export class AuthService {
     private route: ActivatedRoute,
   ) {
 
-    this.db = mongoose.connect('mongodb://localhost:27017');
   }
 
 
