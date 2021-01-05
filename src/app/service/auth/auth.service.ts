@@ -1,18 +1,24 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import * as mongoose from 'mongoose';
+
+
+
 
 
 @Injectable()
 export class AuthService {
 
-  session: any;
+  db: any;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    // this.session = require('express-session');
+
+    this.db = mongoose.connect('mongodb://localhost:27017');
   }
+
 
   login(loginForm: any): void {
     console.log('Tentative de connexion');

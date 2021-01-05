@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "~11.0.5",
     "@angular/router": "~11.0.5",
     "@okta/jwt-verifier": "^1.0.1",
+    "@types/mongoose": "^5.10.3",
     "body-parser": "latest",
     "bootstrap": "^4.5.3",
     "cors": "2.8.5",
