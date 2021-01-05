@@ -1,0 +1,9 @@
+#profilButton {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+#profilButton .first{
+  width: 75px;
+}
