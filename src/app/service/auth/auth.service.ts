@@ -1,13 +1,17 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
+
 @Injectable()
 export class AuthService {
+
+  session: any;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
   ) {
+    // this.session = require('express-session');
   }
 
   login(loginForm: any): void {
@@ -19,7 +23,6 @@ export class AuthService {
 
     // On récupère l'url de redirection
     const redirectUrl = this.route.snapshot.queryParams.redirectUrl || '/home';
-
     // On accède à la page souhaitée
     this.router.navigate([redirectUrl]);
   }
