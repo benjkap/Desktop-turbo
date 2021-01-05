@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import { BddService } from 'src/app/bdd.service';
 
 @Injectable()
 export class AuthService {
@@ -9,6 +10,7 @@ export class AuthService {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    protected bddService: BddService,
   ) {
 
   }
@@ -16,6 +18,12 @@ export class AuthService {
 
   login(loginForm: any): void {
     console.log('Tentative de connexion');
+
+    // demo de recup
+
+    this.bddService.get('user').then((result: any) => {
+      console.log(result);
+    });
 
     // ici on verirfie en bdd le mdp ect...
 

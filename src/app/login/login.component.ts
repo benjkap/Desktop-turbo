@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  login(f: NgForm): void {
+  onSubmit(f: NgForm): void {
     this.authService.login(f.value);
   }
 

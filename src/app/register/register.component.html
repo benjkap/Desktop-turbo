@@ -4,7 +4,7 @@
          src="https://www.mesmarques-enbourse.com/wp-content/themes/mes-marques-en-bourse/logos/600x600/40000009556.jpg"
          alt="..."/>
     <h2 class="mb-4">S'enregistrer</h2>
-    <form (ngSubmit)="register(f)" #f="ngForm" novalidate>
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
       <div class="form-group mt-3">
         <label for="username">Identifiant</label>
         <input type="text" class="form-control" name="username" id="username"
