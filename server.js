@@ -8,8 +8,13 @@ let express = require("express");
 let bodyParser = require("body-parser");
 let jwt = require('jsonwebtoken');
 // Use MongoDB and Mongoose
-let mongodb = require("mongodb");
+let mongodb = require('MongoDB');
 let mongoose = require('mongoose');
+let models = require('./user');
+
+
+
+
 mongoose.set('useFindAndModify',false);
 mongoose.set('useNewUrlParser',true);
 mongoose.set('useCreateIndex',true);
@@ -28,7 +33,7 @@ let app = express();
 // exposed APIs
 app.use(bodyParser.json());
 
-let User = mongoose.model('User', userSchema);
+
 
 // Create link to Angular build directory
 // The `ng build` command will save the result
@@ -53,6 +58,7 @@ mongoose.connection.on('error', function(err) {
 mongoose.connection.on('disconnected', function() {
   console.log('Mongoose disconnected');
 });
+
 // Initialize the app.
 let server = app.listen(process.env.PORT || LOCAL_PORT, function () {
   let port = server.address().port;
@@ -73,20 +79,57 @@ app.post("/api/login", function (req, res) {
   } else if (!login.password) {
       manageError(res, "Invalid product input", "Brand is mandatory.", 400);
   } else {
+    
+    User.findOne({ username:login.username }, function (err, user) {
+      if (err) {console.log("unknown error");
+      return;  }
+    
+      if (!user) {
+         console.log("user not found");
+         return;
+      }
+      // Return if password is wrong
+      if (!user.validPassword(login.password)) {
+        res.status(202).json(false);
+        return;
+      }
+      // If credentials are correct, return the user object
+      console.log("bien joué");
+      res.status(201).json(user._id);
+    });
+
+
+
+
+  }
+
+});
+
+let User = mongoose.model('User');
+
+app.post("/api/register", function (req, res) {
+
+  let register = req.body;
+  console.log("tentative d'inscription, user: " + register.username);
+
+  if (!register.username) {
+      manageError(res, "Invalid input", "Name is mandatory.", 400);
+  } else if (!register.password) {
+      manageError(res, "Invalid input", "password is mandatory.", 400);
+  } else {
 
     //ici traitement pré requete
-    let user = User.findOne({username:login.username});
+    var user = new User() 
     //ici la requète
-    let password = login.password;
-    console.log(user);
-    if(!user)
-      if(user.validPassword(password)){
-        res.status(201).json(user._id);
-      }
-    else{
-        res.status(202).json(false);
-      }
+    user.username = register.username;
+    user.adress = register.email;
+    user.setPassword(register.password);
+    user.save(function(err, user){
+      if (err) return console.error(err);
+      console.log(user.username + " saved to user collection.");
+    })
 
+   
   }
 
 });

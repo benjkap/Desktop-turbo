@@ -5,16 +5,17 @@ let jwt = require('jsonwebtoken');
 let userSchema = new mongoose.Schema({
   adress: {
     type: String,
-    unique: true,
-    required: true
   },
   username: {
     type: String,
-    required: true
   },
   hash: String,
   salt: String
 });
+
+
+
+// METHODS
 
 userSchema.methods.setPassword = function(password){
   this.salt = crypto.randomBytes(16).toString('hex');
@@ -38,4 +39,7 @@ userSchema.methods.generateJwt = function() {
   }, "MY_SECRET"); // DO NOT KEEP YOUR SECRET IN THE CODE!
 };
 
-user = mongoose.model('User', userSchema);
+
+// EXPORT EN MODELE
+
+mongoose.model('User', userSchema);

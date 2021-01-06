@@ -50,8 +50,12 @@ export class AuthService {
       .catch(AuthService.error);
   }
 
-  register(formValues: any): void {
-
+  async register(registerForm: any): Promise<any> {
+    console.log(registerForm);
+    const req = await this.http.post('/api/register', registerForm)
+      .toPromise()
+      .then(response => response.json())
+      .catch(AuthService.error);
   }
 
   logout(): void {
