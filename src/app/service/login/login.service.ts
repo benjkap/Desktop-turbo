@@ -1,26 +1,35 @@
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import { ILogin, Login } from './login.model';
+import {Injectable} from '@angular/core';
+import {Http} from '@angular/http';
+import {ILogin, Login} from './login.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  private productsUrl = '/api/products';
+  private url = '/api/login';
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+  }
 
   // Get products
   get(): Promise<Array<ILogin>> {
-    return this.http.get(this.productsUrl)
+    return this.http.get(this.url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.error);
+  }
+
+  // Get products
+  getUser(user: string): Promise<Array<ILogin>> {
+    return this.http.get(this.url + '/' + user)
       .toPromise()
       .then(response => response.json())
       .catch(this.error);
   }
 
   // Create product
-  create(product: Login): Promise<ILogin> {
-    return this.http.post(this.productsUrl, product)
+  create(login: Login): Promise<ILogin> {
+    return this.http.post(this.url, login)
       .toPromise()
       .then(response => response.json())
       .catch(this.error);
@@ -28,7 +37,7 @@ export class LoginService {
 
   // Delete a product
   delete(id: string): Promise<any> {
-    return this.http.delete(`${this.productsUrl}/${id}`)
+    return this.http.delete(`${this.url}/${id}`)
       .toPromise()
       .then(response => response.json())
       .catch(this.error);

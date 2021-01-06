@@ -17,19 +17,19 @@ export class AuthService {
   }
 
 
-  login(loginForm: any): void {
+  login(loginForm: any): any {
     console.log('Tentative de connexion');
-    const login = new Login(loginForm.username, loginForm.password, loginForm.adress );
-    this.loginService.create(login).then((result: ILogin) => {
-      if (result === undefined) {
-        this.error = true;
-      } else {
-        this.error = false;
-        this.createdProduct.emit(result);
-      }
-      const redirectUrl = this.route.snapshot.queryParams.redirectUrl || '/home';
+
+    console.log(loginForm);
+
+
+    this.loginService.getUser(loginForm.username).then((result: Array<ILogin>) => {
+
+        console.log(result);
+
       // On accède à la page souhaitée
-      this.router.navigate([redirectUrl]);
+        const redirectUrl = this.route.snapshot.queryParams.redirectUrl || '/home';
+        this.router.navigate([redirectUrl]);
     });
   }
 

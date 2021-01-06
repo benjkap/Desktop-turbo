@@ -8,7 +8,7 @@ let ObjectID = mongodb.ObjectID;
 // The database variable
 let database;
 // The products collection
-let PRODUCTS_COLLECTION = "products";
+let USERS_COLLECTION = "users";
 
 // Create new instance of the express server
 let app = express();
@@ -53,41 +53,43 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || LOCAL_DATABASE,
         });
     });
 
-/*  "/api/status"
- *   GET: Get server status
- *   PS: it's just an example, not mandatory
- */
 app.get("/api/status", function (req, res) {
     res.status(200).json({ status: "UP" });
 });
 
-/*  "/api/products"
- *  GET: finds all products
- */
-app.get("/api/products", function (req, res) {
-    database.collection(PRODUCTS_COLLECTION).find({}).toArray(function (error, data) {
+//recup id, username, mdp, adress, ...
+app.get("/api/login", function (req, res) {
+    database.collection(USERS_COLLECTION).find({}).toArray(function (error, data) {
         if (error) {
-            manageError(res, err.message, "Failed to get contacts.");
+            manageError(res, err.message, "Failed to get login.");
         } else {
             res.status(200).json(data);
         }
     });
 });
 
-/*  "/api/products"
- *   POST: creates a new product
- */
-app.post("/api/products", function (req, res) {
-    let product = req.body;
+app.get("/api/login/:user", function (req, res) {
+  console.log(req.params.user);
+  database.collection(USERS_COLLECTION).findOne({username: req.params.user}, (function (error, data) {
+    if (error) {
+      manageError(res, err.message, "Failed to get login with user: " + req.params.user);
+    } else {
+      res.status(200).json(data);
+    }
+  }));
+});
 
-    if (!product.name) {
+app.post("/api/login", function (req, res) {
+    let login = req.body;
+
+    if (!login.name) {
         manageError(res, "Invalid product input", "Name is mandatory.", 400);
-    } else if (!product.brand) {
+    } else if (!login.password) {
         manageError(res, "Invalid product input", "Brand is mandatory.", 400);
     } else {
-        database.collection(PRODUCTS_COLLECTION).insertOne(product, function (err, doc) {
+        database.collection(USERS_COLLECTION).insertOne(login, function (err, doc) {
             if (err) {
-                manageError(res, err.message, "Failed to create new product.");
+                manageError(res, err.message, "Failed to create new login.");
             } else {
                 res.status(201).json(doc.ops[0]);
             }
@@ -95,16 +97,13 @@ app.post("/api/products", function (req, res) {
     }
 });
 
-/*  "/api/products/:id"
- *   DELETE: deletes product by id
- */
-app.delete("/api/products/:id", function (req, res) {
+app.delete("/api/login/:id", function (req, res) {
     if (req.params.id.length > 24 || req.params.id.length < 24) {
         manageError(res, "Invalid product id", "ID must be a single String of 12 bytes or a string of 24 hex characters.", 400);
     } else {
-        database.collection(PRODUCTS_COLLECTION).deleteOne({ _id: new ObjectID(req.params.id) }, function (err, result) {
+        database.collection(USERS_COLLECTION).deleteOne({ _id: new ObjectID(req.params.id) }, function (err, result) {
             if (err) {
-                manageError(res, err.message, "Failed to delete product.");
+                manageError(res, err.message, "Failed to delete login.");
             } else {
                 res.status(200).json(req.params.id);
             }
