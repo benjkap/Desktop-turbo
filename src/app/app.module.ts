@@ -11,6 +11,7 @@ import {AuthService} from './service/auth/auth.service';
 import {RegisterComponent} from './register/register.component';
 import { ProfilComponent } from './profil/profil.component';
 import { CheckListComponent } from './check-list/check-list.component';
+import { RepertoireComponent } from './repertoire/repertoire.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { CheckListComponent } from './check-list/check-list.component';
     HomeComponent,
     RegisterComponent,
     ProfilComponent,
-    CheckListComponent
+    CheckListComponent,
+    RepertoireComponent
   ],
   imports: [
     FormsModule,

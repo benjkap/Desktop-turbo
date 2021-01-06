@@ -1,0 +1,39 @@
+<div class="repertoire">
+    <div class="jumbotron" style="padding:45px 0px">
+      <h1 class="text-center">Répertoire de contacts :</h1>
+    </div>
+  
+    <button type="button" class="btn btn-success" (click)="ajoutContact = true" *ngIf="ajoutContact == false">Ajouter</button>
+    <button type="button" class="btn btn-success" (click)="ajoutContact = false" *ngIf="ajoutContact == true">Annuler</button>
+  
+    <div class="input-group" *ngIf="ajoutContact == true">
+      <div class="createContact">
+        <h4>Nom d'utilisateur:</h4>
+        <input type="text" class="form-group" [(ngModel)]="newContact.username" />
+        <h4>Adresse Mail:</h4>
+        <input type="text" class="form-group" [(ngModel)]="newContact.email" />
+        <h4>N° de téléphone:</h4>
+        <input type="text" class="form-group" [(ngModel)]="newContact.phoneNumber" />
+      </div>
+  
+      <button type="button" class="btn btn-success" (click)="onAddContact()">Ajouter</button>
+    </div>
+  
+    <div style="margin:5px 0px" *ngIf="ajoutContact == false">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let element of listContact; let k = index">
+          <h3>Nom d'utilisateur: {{element.username}}</h3>
+          <h3>Adresse Mail: {{element.email}}</h3>
+          <h3>N° de téléphone: {{element.phoneNumber}}</h3>
+  
+          <span class="hover-cursor text-danger pull-right" (click)="onDelete(k)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+              <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+            </svg>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  

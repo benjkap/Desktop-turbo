@@ -29,7 +29,7 @@ export class CheckListComponent implements OnInit {
   }
 
   onDelete(i: number) {
-    delete this.toDoList.splice(i,1);
+    this.toDoList.splice(i,1);
   }
 
   isChecked(i: number) {
