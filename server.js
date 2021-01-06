@@ -72,6 +72,8 @@ app.get("/api/status", function (req, res) {
 app.post("/api/login", function (req, res) {
 
   let login = req.body;
+
+  console.log(login);
   console.log('tentative de connection, user: ' + login.username);
 
   if (!login.username) {
