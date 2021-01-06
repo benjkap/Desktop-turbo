@@ -7,3 +7,7 @@
 #profilButton .first{
   width: 75px;
 }
+
+#disconnect, #profile {
+  cursor: pointer;
+}

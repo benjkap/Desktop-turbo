@@ -15,14 +15,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Welcome home');
+    console.log(this.authService.getUserDetails());
   }
 
-  getLogin(): any {
-    // renvoie le login
-  }
-
-  logout(): void {
-    return this.authService.logout();
+  public logout() {
+    this.authService.logout();
   }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import '@angular/compiler';
 import {AuthService} from '../service/auth/auth.service';
 import {NgForm} from '@angular/forms';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -20,22 +19,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 30000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer);
-        toast.addEventListener('mouseleave', Swal.resumeTimer);
-      }
-    });
-
-    Toast.fire({
-      icon: 'success',
-      title: 'Signed in successfully'
-    });
 
   }
 

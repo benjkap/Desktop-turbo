@@ -82,7 +82,8 @@ app.post("/api/login", function (req, res) {
   } else {
 
     User.findOne({ username:login.username }, function (err, user) {
-      if (err) {console.log("unknown error");
+      if (err) {
+        console.log("unknown error");
       return;  }
 
       if (!user) {
@@ -96,7 +97,8 @@ app.post("/api/login", function (req, res) {
       }
       // If credentials are correct, return the user object
       console.log("bien joué");
-      res.status(201).json(user._id);
+      let token = user.generateJwt();
+      res.status(201).json(token);
     });
 
 
@@ -130,6 +132,7 @@ app.post("/api/register", function (req, res) {
       console.log(user.username + " saved to user collection.");
     })
 
+    res.status(203).json();
 
   }
 
