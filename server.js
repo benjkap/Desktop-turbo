@@ -73,7 +73,6 @@ app.post("/api/login", function (req, res) {
 
   let login = req.body;
 
-  console.log(login);
   console.log('tentative de connection, user: ' + login.username);
 
   if (!login.username) {
@@ -81,11 +80,11 @@ app.post("/api/login", function (req, res) {
   } else if (!login.password) {
       manageError(res, "Invalid product input", "Brand is mandatory.", 400);
   } else {
-    
+
     User.findOne({ username:login.username }, function (err, user) {
       if (err) {console.log("unknown error");
       return;  }
-    
+
       if (!user) {
          console.log("user not found");
          return;
@@ -121,7 +120,7 @@ app.post("/api/register", function (req, res) {
   } else {
 
     //ici traitement pré requete
-    var user = new User() 
+    var user = new User()
     //ici la requète
     user.username = register.username;
     user.adress = register.email;
@@ -131,7 +130,7 @@ app.post("/api/register", function (req, res) {
       console.log(user.username + " saved to user collection.");
     })
 
-   
+
   }
 
 });
