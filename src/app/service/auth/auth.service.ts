@@ -43,6 +43,7 @@ export class AuthService {
   }
 
   async login(loginForm: any): Promise<any> {
+    console.log(loginForm);
     const req = await this.http.post('/api/login', loginForm)
       .toPromise()
       .then(response => response.json())

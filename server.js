@@ -1,9 +1,19 @@
+// use passport
+//let passport = require('passport');
+// use crypto
+let crypto = require('crypto');
 // Use Express
 let express = require("express");
 // Use body-parser
 let bodyParser = require("body-parser");
-// Use MongoDB
+let jwt = require('jsonwebtoken');
+// Use MongoDB and Mongoose
 let mongodb = require("mongodb");
+let mongoose = require('mongoose');
+mongoose.set('useFindAndModify',false);
+mongoose.set('useNewUrlParser',true);
+mongoose.set('useCreateIndex',true);
+mongoose.set('useUnifiedTopology',true);
 let ObjectID = mongodb.ObjectID;
 // The database variable
 let database;
@@ -18,6 +28,8 @@ let app = express();
 // exposed APIs
 app.use(bodyParser.json());
 
+let User = mongoose.model('User', userSchema);
+
 // Create link to Angular build directory
 // The `ng build` command will save the result
 // under the `dist` folder.
@@ -30,29 +42,22 @@ const LOCAL_DATABASE = "mongodb://localhost:27017/app";
 const LOCAL_PORT = 8080;
 
 // Init the server
-mongodb.MongoClient.connect(process.env.MONGODB_URI || LOCAL_DATABASE,
-    {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-    }, function (error, client) {
+mongoose.connect(LOCAL_DATABASE);
 
-        // Check if there are any problems with the connection to MongoDB database.
-        if (error) {
-            console.log(error);
-            process.exit(1);
-        }
-
-        // Save database object from the callback for reuse.
-        database = client.db();
-        console.log("Database connection done.");
-
-        // Initialize the app.
-        let server = app.listen(process.env.PORT || LOCAL_PORT, function () {
-            let port = server.address().port;
-            console.log("App now running on port", port);
-        });
-    });
-
+mongoose.connection.on('connected', function() {
+  console.log('Mongoose connected to ' + LOCAL_DATABASE);
+});
+mongoose.connection.on('error', function(err) {
+  console.log('Mongoose connection error: ' + err);
+});
+mongoose.connection.on('disconnected', function() {
+  console.log('Mongoose disconnected');
+});
+// Initialize the app.
+let server = app.listen(process.env.PORT || LOCAL_PORT, function () {
+  let port = server.address().port;
+  console.log("App now running on port", port);
+});
 app.get("/api/status", function (req, res) {
     res.status(200).json({ status: "UP" });
 });
@@ -69,12 +74,19 @@ app.post("/api/login", function (req, res) {
       manageError(res, "Invalid product input", "Brand is mandatory.", 400);
   } else {
 
-    //ici traitement post requete
-
+    //ici traitement pré requete
+    let user = User.findOne({username:login.username});
     //ici la requète
+    let password = login.password;
+    console.log(user);
+    if(!user)
+      if(user.validPassword(password)){
+        res.status(201).json(user._id);
+      }
+    else{
+        res.status(202).json(false);
+      }
 
-    //envoie resolution
-     res.status(201).json('ceci est un id');
   }
 
 });
