@@ -10,7 +10,8 @@ import {AppRoutingModule} from './app-routing.module';
 import {AuthService} from './service/auth/auth.service';
 import {RegisterComponent} from './register/register.component';
 import { ClockComponent } from './clock/clock.component';
-import { DatePipe } from '@angular/common'; 
+import { DatePipe } from '@angular/common';
+import { CalculatorComponent } from './calculator/calculator.component'; 
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { DatePipe } from '@angular/common';
     LoginComponent,
     HomeComponent,
     RegisterComponent,
-    ClockComponent
+    ClockComponent,
+    CalculatorComponent
   ],
   imports: [
     FormsModule,
