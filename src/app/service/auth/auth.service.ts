@@ -27,6 +27,10 @@ export class AuthService {
     document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
   }
 
+  protected deleteCookie(cname) {
+    document.cookie = cname + '= ; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+  }
+
   protected getCookie(cname) {
     const name = cname + '=';
     const decodedCookie = decodeURIComponent(document.cookie);
@@ -47,19 +51,27 @@ export class AuthService {
       .toPromise()
       .then(response => response.json())
       .catch(AuthService.error);
+    const redirectUrl = this.route.snapshot.queryParams.redirectUrl || '/home';
+    await this.router.navigate([redirectUrl]);
   }
 
-  register(formValues: any): void {
-
+  async register(registerForm: any): Promise<any> {
+    const req = await this.http.post('/api/register', registerForm)
+      .toPromise()
+      .then(response => response.json())
+      .catch(AuthService.error);
+    await this.router.navigate(['/login']);
   }
 
   logout(): void {
-    console.log('Tentative de déconnexion');
-    this.router.navigate(['/login']);
+    if (this.getCookie('DT_SessionId')) { this.deleteCookie('DT_SessionId'); }
+    if (this.getCookie('DT_Token')) { this.deleteCookie('DT_Token'); }
   }
 
-  isAuth(): boolean {
-    // verifie le token et renvoie si il est connecter ou non
-    return false;
-  };
+  async isAuth(): Promise<boolean> {
+    return await this.http.post('/api/auth', {id: this.getCookie('DT_SessionId'), token: this.getCookie('DT_Token')})
+      .toPromise()
+      .then(response => response.json())
+      .catch(AuthService.error);
+  }
 }
