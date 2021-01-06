@@ -1,56 +1,64 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { LoginService } from 'src/app/service/login/login.service';
-import { ILogin, Login } from 'src/app/service/login/login.model';
+import {Http} from '@angular/http';
 
 @Injectable()
 export class AuthService {
   db: any;
-  error = false;
-  @Output() createdProduct = new EventEmitter<ILogin>();
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    protected loginService: LoginService
+    private http: Http
   ) {
   }
 
+  // Error handling
+  private static error(error: any) {
+    const message = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(message);
+  }
 
-  login(loginForm: any): any {
-    console.log('Tentative de connexion');
+  protected setCookie(cname, cvalue, exminutes) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exminutes * 60 * 1000));
+    const expires = 'expires=' + d.toUTCString();
+    document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
+  }
 
-    console.log(loginForm);
+  protected getCookie(cname) {
+    const name = cname + '=';
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for (let c of ca) {
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return '';
+  }
 
-
-    this.loginService.getUser(loginForm.username).then((result: Array<ILogin>) => {
-
-        console.log(result);
-
-      // On accède à la page souhaitée
-        const redirectUrl = this.route.snapshot.queryParams.redirectUrl || '/home';
-        this.router.navigate([redirectUrl]);
-    });
+  async login(loginForm: any): Promise<any> {
+    const req = await this.http.post('/api/login', loginForm)
+      .toPromise()
+      .then(response => response.json())
+      .catch(AuthService.error);
   }
 
   register(formValues: any): void {
-
-    // on verifie que les entrées sont correct (à voir plus tard pour invalid)
-    // puis insert dans bdd
 
   }
 
   logout(): void {
     console.log('Tentative de déconnexion');
-
-    // on supprime les tokens
-
-
     this.router.navigate(['/login']);
   }
 
   isAuth(): boolean {
-
     // verifie le token et renvoie si il est connecter ou non
     return false;
   };

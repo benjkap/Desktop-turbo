@@ -57,44 +57,26 @@ app.get("/api/status", function (req, res) {
     res.status(200).json({ status: "UP" });
 });
 
-//recup id, username, mdp, adress, ...
-app.get("/api/login", function (req, res) {
-    database.collection(USERS_COLLECTION).find({}).toArray(function (error, data) {
-        if (error) {
-            manageError(res, err.message, "Failed to get login.");
-        } else {
-            res.status(200).json(data);
-        }
-    });
-});
-
-app.get("/api/login/:user", function (req, res) {
-  console.log(req.params.user);
-  database.collection(USERS_COLLECTION).findOne({username: req.params.user}, (function (error, data) {
-    if (error) {
-      manageError(res, err.message, "Failed to get login with user: " + req.params.user);
-    } else {
-      res.status(200).json(data);
-    }
-  }));
-});
 
 app.post("/api/login", function (req, res) {
-    let login = req.body;
 
-    if (!login.name) {
-        manageError(res, "Invalid product input", "Name is mandatory.", 400);
-    } else if (!login.password) {
-        manageError(res, "Invalid product input", "Brand is mandatory.", 400);
-    } else {
-        database.collection(USERS_COLLECTION).insertOne(login, function (err, doc) {
-            if (err) {
-                manageError(res, err.message, "Failed to create new login.");
-            } else {
-                res.status(201).json(doc.ops[0]);
-            }
-        });
-    }
+  let login = req.body;
+  console.log('tentative de connection, user: ' + login.username);
+
+  if (!login.username) {
+      manageError(res, "Invalid product input", "Name is mandatory.", 400);
+  } else if (!login.password) {
+      manageError(res, "Invalid product input", "Brand is mandatory.", 400);
+  } else {
+
+    //ici traitement post requete
+
+    //ici la requète
+
+    //envoie resolution
+     res.status(201).json('ceci est un id');
+  }
+
 });
 
 app.delete("/api/login/:id", function (req, res) {
