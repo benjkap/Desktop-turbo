@@ -1,0 +1,13 @@
+.menuCheckList {
+    position: relative;
+    background-color: darkslategrey;
+    float: right;
+    width: 25vw;
+    height: 100vh;
+}
+
+.checkList {
+    position: relative;
+    width: 74.9vw;
+    text-align: center;
+}

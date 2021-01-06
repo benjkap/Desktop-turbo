@@ -9,13 +9,17 @@ import {HomeComponent} from './home/home.component';
 import {AppRoutingModule} from './app-routing.module';
 import {AuthService} from './service/auth/auth.service';
 import {RegisterComponent} from './register/register.component';
+import { ProfilComponent } from './profil/profil.component';
+import { CheckListComponent } from './check-list/check-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfilComponent,
+    CheckListComponent
   ],
   imports: [
     FormsModule,
