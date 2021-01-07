@@ -9,9 +9,6 @@ import {HomeComponent} from './home/home.component';
 import {AppRoutingModule} from './app-routing.module';
 import {AuthService} from './service/auth/auth.service';
 import {RegisterComponent} from './register/register.component';
-import { ClockComponent } from './widget/clock/clock.component';
-import { DatePipe } from '@angular/common';
-import { CalculatorComponent } from './widget/calculator/calculator.component';
 import { ProfilComponent } from './profil/profil.component';
 import { CheckListComponent } from './check-list/check-list.component';
 import { RepertoireComponent } from './repertoire/repertoire.component';
@@ -22,8 +19,6 @@ import { RepertoireComponent } from './repertoire/repertoire.component';
     LoginComponent,
     HomeComponent,
     RegisterComponent,
-    ClockComponent,
-    CalculatorComponent
     ProfilComponent,
     CheckListComponent,
     RepertoireComponent
