@@ -24,7 +24,15 @@
         Déconnexion</a>
     </div>
   </div>
+
 </div>
+<script>
+  function dragstart_handler(ev) {
+   // On ajoute l'identifiant de l'élément cible à l'objet de transfert
+   ev.dataTransfer.setData("text/plain", ev.target.innerText);
+  }
+  </script>
+  
 
 <div id="clock">
   <cs-canvas-clock></cs-canvas-clock>
@@ -41,3 +49,11 @@
 <div id="repertoire" class="jumbotron pt-2 pb-2 m-0">
   <app-repertoire></app-repertoire>
 </div>
+
+<div id="agenda" class="pt-5 mt-5" cdkDrag>
+
+  <app-agenda></app-agenda>
+</div>
+
+  <app-note></app-note>
+

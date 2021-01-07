@@ -42,3 +42,14 @@
 #disconnect, #profile {
   cursor: pointer;
 }
+
+#agenda{
+  width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#note{
+  width: 1000px;
+
+}
