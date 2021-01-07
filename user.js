@@ -2,6 +2,94 @@ let mongoose = require( 'mongoose' );
 let crypto = require('crypto');
 let jwt = require('jsonwebtoken');
 
+var clockSchema = new mongoose.Schema({
+  fuseau : {
+    type : String,
+    default : 12
+  },
+  isShown : {
+    type : Boolean,
+    default : true
+  }, 
+});
+mongoose.model('clockSchema', clockSchema,);
+
+var shortcutSchema = new mongoose.Schema({
+  name: String, 
+  link : String, 
+  icon: String,
+});
+mongoose.model('shortcutSchema',shortcutSchema ,);
+
+var calendarSchema = new mongoose.Schema({
+  start : Date,
+  end :Date, 
+  motive: String,
+});
+mongoose.model('calendarSchema',calendarSchema ,);
+
+var toDoListSchema = new mongoose.Schema({
+  name:String,
+  subString:[{
+    name: String,
+    valid :Boolean
+  }]
+});
+mongoose.model('toDoListSchema', toDoListSchema,);
+
+var contactSchema = new mongoose.Schema({
+  name : String, 
+  phone : String, 
+  Email : String
+});
+mongoose.model('contactSchema',contactSchema ,);
+
+var notificationSchema = new mongoose.Schema({
+  content : String, 
+  reason : String
+});
+mongoose.model('notificationSchema',notificationSchema ,);
+
+var widgetListSchema = new mongoose.Schema({
+
+  clock : {type : clockSchema},
+
+  shortcuts :{
+    list : [{type : shortcutSchema}],
+    isShown : {type : Boolean,default: true}
+  },
+    
+  calendar: {
+    list : [{type : calendarSchema}],
+    isShown : {type : Boolean,default : true}
+  },
+
+  notepad : {
+    list :[String],
+    isShown : { type :Boolean,default : true }
+      },
+
+  toDoList :{
+    category : [{type : toDoListSchema}],
+    isShown : { type :Boolean,default : true }
+      },
+
+  calculator : {isShown :{ type :Boolean,default : true }
+    },
+
+  contacts : { 
+    list :[{type : contactSchema}],
+    isShown : { type :Boolean,default : true }
+      },
+
+  notifications :{
+     list : [{type : notificationSchema}],
+    isShown : { type :Boolean,default : true }
+}
+});
+mongoose.model('widgetlist', widgetListSchema,);
+
+
 let userSchema = new mongoose.Schema({
   adress: {
     type: String,
@@ -20,45 +108,7 @@ let userSchema = new mongoose.Schema({
   hash: String,
   salt: String,
   isAdmin : Boolean,
-  widgetList : {
-    clock : {fuseau : String, isShown : Boolean },
-    shortcuts :{list : [{
-      name: String, 
-      link : String, 
-      icon: String,
-    }],
-    isShown : Boolean
-  },
-    calendar: {
-      start : Date,
-      end :Date, 
-      motive:String,
-      isShown : Boolean
-    },
-    notepad : {list :[String], isShown : Boolean,},
-    toDoList :{category : [{
-      name:String,
-      subString:[{
-        name: String,
-        valid :Boolean
-      }]
-    }],
-    isShown : Boolean
-  },
-    calculator : {isShown : Boolean},
-    contacts : [{
-      name : String, 
-      phone : String, 
-      Email : String
-    }],
-    notifications :{
-       list : [{
-        content : String, 
-        reason : String
-    }],
-        isShown : Boolean
-  }
-  },
+  widgetList : {type : widgetListSchema},
   
   
 });
