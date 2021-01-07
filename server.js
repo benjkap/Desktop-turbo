@@ -120,7 +120,7 @@ app.post("/api/register", function (req, res) {
   } else {
 
     //ici traitement pré requete
-    var user = new User();
+    let user = new User();
     //ici la requète
     user.username = register.username;
     user.adress = register.email;

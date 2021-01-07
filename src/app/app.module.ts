@@ -20,7 +20,10 @@ import { CalculatorComponent } from './widget/calculator/calculator.component';
     HomeComponent,
     RegisterComponent,
     ClockComponent,
-    CalculatorComponent
+    CalculatorComponent,
+    ProfilComponent,
+    CheckListComponent,
+    RepertoireComponent
   ],
   imports: [
     FormsModule,
