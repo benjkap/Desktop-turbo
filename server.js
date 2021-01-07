@@ -189,7 +189,7 @@ app.post("/api/check_list", function (req, res) {
   }
 });
 
-app.post("/api/profile", function (req, res) {
+app.post("/api/profile/username", function (req, res) {
 
   let token= req.body.token;
   let data = req.body.data;
@@ -206,7 +206,7 @@ app.post("/api/profile", function (req, res) {
         res.status(212).json('unknown');
         return;
       } else {
-        res.status(213).json(user.widgetList.profile);
+        res.status(213).json(user.username);
       }
     });
   }
@@ -215,17 +215,105 @@ app.post("/api/profile", function (req, res) {
     User.findOne({username: userDetails.username}, function (err, user) {
       if (err) {
         console.log("unknown error");
-        res.status(200).json('unknown');
+        res.status(214).json('unknown');
         return;
       } else {
-        user.setProfile(data);
+        user.username = data;
         user.save(function (err, user) {
           if (err) {
             console.error(err);
-            res.status(214).json(false);
+            res.status(215).json(false);
           }
           console.log(userDetails.username + " ajouté à la collection.");
-          res.status(215).json(true);
+          res.status(216).json(true);
+
+        });
+
+      }
+    });
+  }
+});
+app.post("/api/profile/address", function (req, res) {
+
+  let token= req.body.token;
+  let data = req.body.data;
+  if(token === undefined){
+    manageError(res, "Invalid product input", "Name is mandatory.", 400);
+    return;
+  }
+  let userDetails;
+  userDetails = getUserDetails(token);
+  if(data === undefined){
+    User.findOne({username: userDetails.username}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(217).json('unknown');
+        return;
+      } else {
+        res.status(218).json(user.adress);
+      }
+    });
+  }
+  else {
+    //ici traitement pré requete
+    User.findOne({username: userDetails.username}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(219).json('unknown');
+        return;
+      } else {
+        user.address = data;
+        user.save(function (err, user) {
+          if (err) {
+            console.error(err);
+            res.status(220).json(false);
+          }
+          console.log(userDetails.username + " ajouté à la collection.");
+          res.status(221).json(true);
+
+        });
+
+      }
+    });
+  }
+});
+app.post("/api/profile/password", function (req, res) {
+
+  let token= req.body.token;
+  let data = req.body.data;
+  if(token === undefined){
+    manageError(res, "Invalid product input", "Name is mandatory.", 400);
+    return;
+  }
+  let userDetails;
+  userDetails = getUserDetails(token);
+  if(data === undefined){
+    User.findOne({username: userDetails.username}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(222).json('unknown');
+        return;
+      } else {
+        res.status(223).json(user.background);
+      }
+    });
+  }
+  else {
+    //ici traitement pré requete
+    User.findOne({username: userDetails.username}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(224).json('unknown');
+        return;
+      } else {
+        user.background = data;
+        user.save(function (err, user) {
+          if (err) {
+            console.error(err);
+            res.status(225).json(false);
+          }
+          console.log(userDetails.username + " ajouté à la collection.");
+          res.status(226).json(true);
 
         });
 
@@ -247,9 +335,9 @@ app.post("/api/clock", function (req, res) {
     User.findOne({username: userDetails.username}, function (err, user) {
       if (err) {
         console.log("unknown error");
-        res.status(216).json('unknown');
+        res.status(227).json('unknown');
       } else {
-        res.status(217).json(user.widgetList.clock);
+        res.status(228).json(user.widgetList.clock);
       }
     });
   }
@@ -259,15 +347,15 @@ app.post("/api/clock", function (req, res) {
     User.findOne({username: userDetails.username}, function (err, user) {
       if (err) {
         console.log("unknown error");
-        res.status(218).json('unknown');
+        res.status(229).json('unknown');
       } else {
         user.setClock(data);
         user.save(function (err, user) {
           if (err) {
             console.error(err);
-            res.status(219).json(false);
+            res.status(230).json(false);
           }
-          res.status(220).json(true);
+          res.status(231).json(true);
 
         });
 
@@ -289,10 +377,10 @@ app.post("/api/agenda", function (req, res) {
     User.findOne({username: user.username}, function (err, user) {
       if (err) {
         console.log("unknown error");
-        res.status(220).json('unknown');
+        res.status(232).json('unknown');
         return;
       } else {
-        res.status(221).json(userDetails.widgetList.calendar);
+        res.status(233).json(userDetails.widgetList.calendar);
       }
     });
   }
@@ -301,17 +389,17 @@ app.post("/api/agenda", function (req, res) {
     User.findOne({username: userDetails.username}, function (err, user) {
       if (err) {
         console.log("unknown error");
-        res.status(222).json('unknown');
+        res.status(234).json('unknown');
         return;
       } else {
         user.setCalendar(data);
         user.save(function (err, user) {
           if (err) {
             console.error(err);
-            res.status(223).json(false);
+            res.status(235).json(false);
           }
           console.log(userDetails.username + " a été update");
-          res.status(224).json(true);
+          res.status(236).json(true);
 
         });
 
