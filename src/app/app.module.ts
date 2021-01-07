@@ -55,10 +55,8 @@ import { RepertoireComponent } from './widget/repertoire/repertoire.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [AuthService],
 
-  bootstrap: [AppComponent],
-  entryComponents: [DragDropComponent]
+  entryComponents: [DragDropComponent],
 
   providers: [AuthService, DatePipe],
   bootstrap: [AppComponent]
