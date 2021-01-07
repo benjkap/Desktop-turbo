@@ -79,7 +79,7 @@ var widgetListSchema = new mongoose.Schema({
       },
 
   toDoList :{
-    category : [{type : toDoListSchema}],
+    category : [{name: String, list :{type : toDoListSchema}}],
     isShown : { type :Boolean,default : true },
     coordinates : {type : coordinatesSchema}
       },
