@@ -1,0 +1,34 @@
+<div class="profil">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div>Nom d'utilisateur: </div>
+        <div class="username"> {{ username }} </div>
+        <div class="crayonModif" [ngStyle]="{'background-image': getUrlCrayon()}" (click)="activeModif('username')"> </div>
+        <input type="text" class="form-control" [(ngModel)]="username" *ngIf="isUsernameModif === 'true'" />
+      </li>
+  
+      <li class="list-group-item">
+        <div>Adresse Mail: </div>
+        <div class="email"> {{ email }} </div>
+        <div class="crayonModif" [ngStyle]="{'background-image': getUrlCrayon()}" (click)="activeModif('email')"> </div>
+        <input type="text" class="form-control" [(ngModel)]="email" *ngIf="isEmailModif === 'true'" />
+      </li>
+  
+      <li class="list-group-item">
+        <div>Mot de passe: </div>
+        <div class="password"> {{ password }} </div>
+        <div class="crayonModif" [ngStyle]="{'background-image': getUrlCrayon()}" (click)="activeModif('password')"> </div>
+        <input type="text" class="form-control" [(ngModel)]="password" *ngIf="isPasswordModif === 'true'" />
+      </li>
+  
+      <li class="list-group-item">
+        <div>Fond d'écran: </div>
+        <div class="wallpaper"> {{ wallpaper }} </div>
+        <div class="crayonModif" [ngStyle]="{'background-image': getUrlCrayon()}" (click)="activeModif('wallpaper')"> </div>
+        <input type="text" class="form-control" [(ngModel)]="wallpaper" *ngIf="isWallpaperModif === 'true'" />
+      </li>
+    </ul>
+    <button type="button" class="btn btn-success" (click)="saveChanges()">Sauvegarder</button>
+    <div class="saveEffect" *ngIf="isNewSave === 'true'">Changements sauvegardés</div>
+  </div>
+  
