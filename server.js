@@ -128,17 +128,12 @@ app.post("/api/register", function (req, res) {
       if (err) {
         console.error(err);
         res.status(204).json(false);
+      } else {
+        console.log(user.username + " ajouté à la collection.");
+        res.status(205).json(true);
       }
-      console.log(user.username + " ajouté à la collection.");
-      res.status(205).json(true);
-
     });
-
-    res.status(206).json(false);
-
-  }
-
-});
+  }});
 app.post("/api/check_list", function (req, res) {
 
   let token= req.body.token;

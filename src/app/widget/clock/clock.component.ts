@@ -2,11 +2,11 @@ import {Component, ViewChild, ElementRef, Input, OnInit, AfterViewInit, OnDestro
 import {ChangeDetectionStrategy, NgZone} from '@angular/core';
 import {Observable, timer, Subscription} from 'rxjs';
 import {timeInterval, tap, map} from 'rxjs/operators';
-import {Http} from '@angular/http';
 // import { TDate } from '../../tdate';
 import {formatDate} from '@angular/common';
 import {DatePipe} from '@angular/common';
 import {AuthService} from '../../service/auth/auth.service';
+import {Http} from '@angular/http';
 
 @Component({
   selector: 'app-clock',

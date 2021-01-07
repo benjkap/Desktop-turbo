@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../service/auth/auth.service';
+import {Http} from '@angular/http';
 
 @Component({
   selector: 'app-check-list',
@@ -18,6 +20,23 @@ export class CheckListComponent implements OnInit {
   }, {key: 'tache4', value: false}, {key: 'tache5', value: true}];
   // ça doit ressembler à quelque chose du style good luck have fun
   // listCheckList: {key: number, [{element: string, valeur: boolean}]} = "";
+
+  constructor(private http: Http, private authService: AuthService) {
+  }
+
+  private static error(error: any) {
+    const message = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(message);
+  }
+
+  public async getUTC() {
+    const req = await this.http.post('/api/clock', {token: this.authService.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(CheckListComponent.error);
+    console.log(req);
+  }
 
   changeCheckList(j: number) {
     this.numEltCheckList = j;
@@ -60,9 +79,6 @@ export class CheckListComponent implements OnInit {
 
   alterCheck(i: number) {
     this.toDoList[i].value = !this.isChecked(i);
-  }
-
-  constructor() {
   }
 
   ngOnInit(): void {
