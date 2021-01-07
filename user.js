@@ -76,6 +76,18 @@ userSchema.methods.validPassword = function(password) {
   let hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
   return this.hash === hash;
 };
+userSchema.methods.setCheck_list = function(list) {
+  this.widgetList.toDoList=list;
+};
+userSchema.methods.setProfile = function(Profile) {
+  this.widgetList.profile=Profile;
+};
+userSchema.methods.setClock = function(fuseauH) {
+  this.widgetList.clock=fuseauH;
+};
+userSchema.methods.setCalendar = function(calendar) {
+  this.widgetList.calendar=calendar;
+};
 
 userSchema.methods.generateJwt = function() {
   let expiry = new Date();
