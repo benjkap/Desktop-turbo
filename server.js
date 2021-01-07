@@ -162,7 +162,7 @@ app.post("/api/check_list", function (req, res) {
         return;
       } else {
         console.log(userDetails.username + " ajouté à la collection.");
-        res.status(208).json(userDetails.widgetList.toDoList);
+        res.status(208).json(user.widgetList.toDoList);
       }
     });
   }
@@ -207,7 +207,7 @@ app.post("/api/profile", function (req, res) {
         res.status(212).json('unknown');
         return;
       } else {
-        res.status(213).json(userDetails.widgetList.profile);
+        res.status(213).json(user.widgetList.profile);
       }
     });
   }
@@ -251,7 +251,7 @@ app.post("/api/clock", function (req, res) {
         res.status(216).json('unknown');
         return;
       } else {
-        res.status(217).json(userDetails.widgetList.clock);
+        res.status(217).json(user.widgetList.clock);
       }
     });
   }
@@ -290,7 +290,7 @@ app.post("/api/agenda", function (req, res) {
   let userDetails;
   userDetails = getUserDetails(token);
   if(data === undefined){
-    User.findOne({username: userDetails.username}, function (err, user) {
+    User.findOne({username: user.username}, function (err, user) {
       if (err) {
         console.log("unknown error");
         res.status(220).json('unknown');
