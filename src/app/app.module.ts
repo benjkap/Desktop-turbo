@@ -23,6 +23,7 @@ import { CalculatorComponent } from './widget/calculator/calculator.component';
 import { ProfilComponent } from './profil/profil.component';
 import { CheckListComponent } from './widget/check-list/check-list.component';
 import { RepertoireComponent } from './widget/repertoire/repertoire.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 
 
@@ -41,7 +42,8 @@ import { RepertoireComponent } from './widget/repertoire/repertoire.component';
     CalculatorComponent,
     ProfilComponent,
     CheckListComponent,
-    RepertoireComponent
+    RepertoireComponent,
+    AdminPanelComponent
   ],
   imports: [
     FormsModule,
