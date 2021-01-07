@@ -11,7 +11,7 @@ let jwt = require('jsonwebtoken');
 let mongodb = require('MongoDB');
 let mongoose = require('mongoose');
 let models = require('./user');
-
+let atob = require('atob');
 
 mongoose.set('useFindAndModify', false);
 mongoose.set('useNewUrlParser', true);
@@ -25,7 +25,6 @@ let USERS_COLLECTION = "users";
 
 // Create new instance of the express server
 let app = express();
-
 // Define the JSON parser as a default way
 // to consume and produce data through the
 // exposed APIs
@@ -140,7 +139,185 @@ app.post("/api/register", function (req, res) {
   }
 
 });
+app.post("/api/check_list", function (req, res) {
 
+  let token= req.body.token;
+  let data = req.body.data;
+  if(token === undefined){
+    manageError(res, "Invalid product input", "token is mandatory.", 400);
+    return;
+  }
+  let userDetails;
+  userDetails = getUserDetails(token);
+  if(data === undefined){
+    User.findOne({username: userDetails.username}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(200).json('unknown');
+        return;
+      } else {
+        console.log(userDetails.username + " ajouté à la collection.");
+        res.status(205).json(userDetails.widgetList.toDoList);
+      }
+    });
+  }
+  else {
+    //ici traitement pré requete
+    User.findOne({username: userDetails.username}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(200).json('unknown');
+        return;
+      } else {
+        user.setCheck_list(data);
+        user.save(function (err, user) {
+          if (err) {
+            console.error(err);
+            res.status(204).json(false);
+          }
+          console.log(userDetails.username + " ajouté à la collection.");
+          res.status(205).json(true);
+
+        });
+
+      }
+    });
+  }
+});
+
+app.post("/api/profile", function (req, res) {
+
+  let token= req.body.token;
+  let data = req.body.data;
+  if(token === undefined){
+    manageError(res, "Invalid product input", "Name is mandatory.", 400);
+    return;
+  }
+  let userDetails;
+  userDetails = getUserDetails(token);
+  if(data === undefined){
+    User.findOne({username: userDetails.username}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(200).json('unknown');
+        return;
+      } else {
+        res.status(205).json(userDetails.widgetList.profile);
+      }
+    });
+  }
+  else {
+    //ici traitement pré requete
+    User.findOne({username: userDetails.username}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(200).json('unknown');
+        return;
+      } else {
+        user.setProfile(data);
+        user.save(function (err, user) {
+          if (err) {
+            console.error(err);
+            res.status(204).json(false);
+          }
+          console.log(userDetails.username + " ajouté à la collection.");
+          res.status(205).json(true);
+
+        });
+
+      }
+    });
+  }
+});
+app.post("/api/clock", function (req, res) {
+
+  let token= req.body.token;
+  let data = req.body.data;
+  if(token === undefined){
+    manageError(res, "Invalid product input", "token is mandatory.", 400);
+    return;
+  }
+  let userDetails;
+  userDetails = getUserDetails(token);
+  if(data === undefined){
+    User.findOne({username: userDetails.username}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(200).json('unknown');
+        return;
+      } else {
+        res.status(205).json(userDetails.widgetList.clock);
+      }
+    });
+  }
+  else {
+    console.log("update de la check_list " + data.name);
+    //ici traitement pré requete
+    User.findOne({username: userDetails.username}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(200).json('unknown');
+        return;
+      } else {
+        user.setClock(data);
+        user.save(function (err, user) {
+          if (err) {
+            console.error(err);
+            res.status(204).json(false);
+          }
+          console.log(userDetails.username + " a été update");
+          res.status(205).json(true);
+
+        });
+
+      }
+    });
+  }
+});
+app.post("/api/agenda", function (req, res) {
+
+  let token= req.body.token;
+  let data = req.body.data;
+  if(token === undefined){
+    manageError(res, "Invalid product input", "token is mandatory.", 400);
+    return;
+  }
+  let userDetails;
+  userDetails = getUserDetails(token);
+  if(data === undefined){
+    User.findOne({username: userDetails.username}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(200).json('unknown');
+        return;
+      } else {
+        res.status(205).json(userDetails.widgetList.calendar);
+      }
+    });
+  }
+  else {
+    //ici traitement pré requete
+    User.findOne({username: userDetails.username}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(200).json('unknown');
+        return;
+      } else {
+        user.setCalendar(data);
+        user.save(function (err, user) {
+          if (err) {
+            console.error(err);
+            res.status(204).json(false);
+          }
+          console.log(userDetails.username + " a été update");
+          res.status(205).json(true);
+
+        });
+
+      }
+    });
+  }
+});
 app.delete("/api/login/:id", function (req, res) {
   if (req.params.id.length > 24 || req.params.id.length < 24) {
     manageError(res, "Invalid product id", "ID must be a single String of 12 bytes or a string of 24 hex characters.", 400);
@@ -159,4 +336,15 @@ app.delete("/api/login/:id", function (req, res) {
 function manageError(res, reason, message, code) {
   console.log("Error: " + reason);
   res.status(code || 500).json({"error": message});
+}
+function getUserDetails(token)
+{
+  let payload;
+  if (token) {
+    payload = token.split('.')[1];
+    payload = atob(payload);
+    return JSON.parse(payload);
+  } else {
+    return null;
+  }
 }

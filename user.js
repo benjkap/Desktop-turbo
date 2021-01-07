@@ -5,12 +5,50 @@ let jwt = require('jsonwebtoken');
 let userSchema = new mongoose.Schema({
   adress: {
     type: String,
+    require: true,
+    unique : true,
   },
   username: {
     type: String,
+    require: true,
+    unique : true,
   },
   hash: String,
-  salt: String
+  salt: String,
+  isAdmin : Boolean,
+  widgetList : {
+    clock : String,
+    shortcuts : [{
+      name: String,
+      link : String,
+      icon: String
+    }],
+    calendar: {
+      start : Date,
+      end :Date,
+      motive:String
+    },
+    notepad : [String],
+    toDoList : [{
+      name:String,
+      subString:[{
+        name: String,
+        valid :Boolean
+      }]
+    }],
+    calculatorHistory : [String],
+    contacts : [{
+      name : String,
+      phone : String,
+      Email : String
+    }],
+    notifications :[{
+      content : String,
+      reason : String
+    }]
+  },
+
+
 });
 
 
@@ -25,6 +63,18 @@ userSchema.methods.setPassword = function(password){
 userSchema.methods.validPassword = function(password) {
   let hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
   return this.hash === hash;
+};
+userSchema.methods.setCheck_list = function(list) {
+  this.widgetList.toDoList=list;
+};
+userSchema.methods.setProfile = function(Profile) {
+  this.widgetList.profile=Profile;
+};
+userSchema.methods.setClock = function(fuseauH) {
+  this.widgetList.clock=fuseauH;
+};
+userSchema.methods.setCalendar = function(calendar) {
+  this.widgetList.calendar=calendar;
 };
 
 userSchema.methods.generateJwt = function() {
