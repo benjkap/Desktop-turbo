@@ -7,11 +7,14 @@ import { formatDate } from '@angular/common';
 import { DatePipe } from '@angular/common';  
 @Component({ 
   selector: 'cs-canvas-clock', 
-  template: '<canvas #mycanvas></canvas>', 
+  templateUrl: './clock.component.html', 
   styles: [], 
   changeDetection: ChangeDetectionStrategy.OnPush 
 })  
-export class ClockComponent implements OnInit, OnDestroy, AfterViewInit { 
+export class ClockComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  previousUTC:string = "1:00"; 
+
   @ViewChild('mycanvas', { static: false, read: ElementRef }) canvasRef: ElementRef;  
   public tdate=new Date();  
   @Input() public width = 100;  
@@ -31,30 +34,35 @@ export class ClockComponent implements OnInit, OnDestroy, AfterViewInit {
     this.canvasContext = canvasEl.getContext('2d'); 
     this.canvasContext.translate(radius, radius); 
     this.ngZone.runOutsideAngular(() => this.draw(innerRadius)); 
-  }  
-  ngOnChanges(change) { 
+  }
+
+  ngOnChanges(value) { 
     if (this.subscription) { 
       this.subscription.unsubscribe(); 
     }  
-    if (change.tdate) { 
-      this.tdate = change.tdate.currentValue; 
-      if(this.canvasRef) 
-      { 
-        const canvasEl: HTMLCanvasElement = this.canvasRef.nativeElement; 
-        canvasEl.width = this.width; 
-        canvasEl.height = this.height; 
-        const radius = canvasEl.height / 2; 
-        const innerRadius = radius * 0.89; 
-        this.canvasContext = canvasEl.getContext('2d'); 
-        this.canvasContext.translate(radius, radius); 
-        this.ngZone.runOutsideAngular(() => this.draw(innerRadius)); 
-      }  
+
+    let time = value.split(':');
+    let prevTime = this.previousUTC.split(':');
+    this.tdate.setHours(this.tdate.getHours() + parseInt(time[0], 10) - parseInt(prevTime[0], 10));
+    this.tdate.setMinutes(this.tdate.getMinutes() + parseInt(time[1], 10) - parseInt(prevTime[1], 10));
+    this.previousUTC = value;
+
+    if(this.canvasRef) 
+    { 
+      const canvasEl: HTMLCanvasElement = this.canvasRef.nativeElement; 
+      canvasEl.width = this.width; 
+      canvasEl.height = this.height; 
+      const radius = canvasEl.height / 2; 
+      const innerRadius = radius * 0.89; 
+      this.canvasContext = canvasEl.getContext('2d'); 
+      this.canvasContext.translate(radius, radius); 
+      this.ngZone.runOutsideAngular(() => this.draw(innerRadius)); 
     }  
   }  
   ngOnDestroy() { 
   }  
   draw(innerRadius: number) { 
-    this.drawBackground(this.canvasContext, innerRadius); 
+    this.drawBackground(this.canvasContext, innerRadius);
   }  
     
   drawBackground(canvasContext, innerRadius) { 
