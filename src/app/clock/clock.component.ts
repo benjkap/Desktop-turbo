@@ -13,7 +13,7 @@ import { DatePipe } from '@angular/common';
 })  
 export class ClockComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  previousUTC:string = "1:00"; 
+  previousUTC:string = "12:00"; 
 
   @ViewChild('mycanvas', { static: false, read: ElementRef }) canvasRef: ElementRef;  
   public tdate=new Date();  
@@ -24,7 +24,12 @@ export class ClockComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private ngZone: NgZone,private datePipe: DatePipe) { 
   }  
   
-  ngOnInit() { }  
+  ngOnInit() {
+    let prevTime = this.previousUTC.split(':');
+    this.tdate.setHours(this.tdate.getHours() + parseInt(prevTime[0], 10) - 1);
+    this.tdate.setMinutes(this.tdate.getMinutes() + parseInt(prevTime[1], 10));
+  }
+
   ngAfterViewInit() { 
     const canvasEl: HTMLCanvasElement = this.canvasRef.nativeElement; 
     canvasEl.width = this.width; 
