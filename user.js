@@ -2,6 +2,12 @@ let mongoose = require( 'mongoose' );
 let crypto = require('crypto');
 let jwt = require('jsonwebtoken');
 
+var coordinatesSchema = new mongoose.Schema({
+  xCoordinates : Number,
+  yCoordinates : Number
+})
+mongoose.model('coordinatesSchema', coordinatesSchema,);
+
 var clockSchema = new mongoose.Schema({
   fuseau : {
     type : String,
@@ -11,6 +17,8 @@ var clockSchema = new mongoose.Schema({
     type : Boolean,
     default : true
   }, 
+  xCoordinates : Number,
+  yCoordinates : Number
 });
 mongoose.model('clockSchema', clockSchema,);
 
@@ -18,6 +26,7 @@ var shortcutSchema = new mongoose.Schema({
   name: String, 
   link : String, 
   icon: String,
+  coordinates : {type : coordinatesSchema}
 });
 mongoose.model('shortcutSchema',shortcutSchema ,);
 
@@ -55,31 +64,36 @@ var widgetListSchema = new mongoose.Schema({
   clock : {type : clockSchema},
 
   shortcuts :{
-    list : [{type : shortcutSchema}],
+    list : [{shortcut : {type : shortcutSchema}, coordinates : {type : coordinatesSchema}}],
     isShown : {type : Boolean,default: true}
   },
     
   calendar: {
     list : [{type : calendarSchema}],
-    isShown : {type : Boolean,default : true}
+    isShown : {type : Boolean,default : true},
+    coordinates : {type : coordinatesSchema}
   },
 
   notepad : {
-    list :[String],
-    isShown : { type :Boolean,default : true }
+    list :[ {text : String, coordinates : {type : coordinatesSchema}} ],
+    isShown : { type :Boolean,default : true },
       },
 
   toDoList :{
     category : [{type : toDoListSchema}],
-    isShown : { type :Boolean,default : true }
+    isShown : { type :Boolean,default : true },
+    coordinates : {type : coordinatesSchema}
       },
 
-  calculator : {isShown :{ type :Boolean,default : true }
+  calculator : {
+    isShown :{ type :Boolean,default : true },
+    coordinates : {type : coordinatesSchema}
     },
 
   contacts : { 
     list :[{type : contactSchema}],
-    isShown : { type :Boolean,default : true }
+    isShown : { type :Boolean,default : true },
+    coordinates : {type : coordinatesSchema}
       },
 
   notifications :{
