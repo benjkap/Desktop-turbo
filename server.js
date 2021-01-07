@@ -17,6 +17,14 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
+
+let clockSchema = mongoose.model('clockSchema');
+let shortcutSchema = mongoose.model('shortcutSchema');
+let calendarSchema = mongoose.model('calendarSchema');
+let toDoListSchema = mongoose.model('toDoListSchema');
+let contactSchema = mongoose.model('contactSchema');
+let notificationSchema = mongoose.model('notificationSchema');
+let widgetlist = mongoose.model("widgetlist");
 let ObjectID = mongodb.ObjectID;
 // The database variable
 let database;
@@ -120,9 +128,11 @@ app.post("/api/register", function (req, res) {
 
     //ici traitement pré requete
     let user = new User();
+    let widgetList = new widgetlist;
     //ici la requète
     user.username = register.username;
     user.adress = register.email;
+    user.widgetList = widgetList;
     user.setPassword(register.password);
     user.save(function (err, user) {
       if (err) {
