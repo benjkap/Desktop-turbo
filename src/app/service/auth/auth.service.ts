@@ -169,7 +169,10 @@ export class AuthService {
   public isAuth(): boolean {
     const user = this.getUserDetails();
     if (user) {
-      return user.exp > Date.now() / 1000;
+      if (!(user.exp > Date.now() / 1000)) {
+        this.logout();
+        return false;
+      } else { return true; }
     } else {
       return false;
     }
