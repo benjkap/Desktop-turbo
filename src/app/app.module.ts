@@ -13,8 +13,8 @@ import { ClockComponent } from './widget/clock/clock.component';
 import { DatePipe } from '@angular/common';
 import { CalculatorComponent } from './widget/calculator/calculator.component';
 import { ProfilComponent } from './profil/profil.component';
-import { CheckListComponent } from './check-list/check-list.component';
-import { RepertoireComponent } from './repertoire/repertoire.component';
+import { CheckListComponent } from './widget/check-list/check-list.component';
+import { RepertoireComponent } from './widget/repertoire/repertoire.component';
 
 @NgModule({
   declarations: [

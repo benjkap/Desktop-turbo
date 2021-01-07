@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import {AuthService} from '../service/auth/auth.service';
 
 @Component({
   selector: 'app-profil',
@@ -7,37 +8,37 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ProfilComponent implements OnInit {
 
-  @Input() username: string = 'default';
-  @Input() email: string = 'default@example.com';
-  @Input() password: string = 'password';
-  @Input() wallpaper: string = '/images/wallpaper.jpg';
+  constructor(
+    private authService: AuthService
+  ) {
+  }
 
-  isUsernameModif: string = 'false';
-  isEmailModif: string = 'false';
-  isPasswordModif: string = 'false';
-  isWallpaperModif: string = 'false';
+  user = this.authService.getUserDetails();
 
-  isNewSave: string = 'false';
+  @Input() username  = this.user.username;
+  @Input() email = this.user.adress;
+  @Input() wallpaper = '/images/wallpaper.jpg';
+
+  isUsernameModif = 'false';
+  isEmailModif = 'false';
+  isWallpaperModif = 'false';
+
+  isNewSave = 'false';
 
   activeModif(elt: string){
     this.isUsernameModif = 'false';
     this.isEmailModif = 'false';
-    this.isPasswordModif = 'false';
     this.isWallpaperModif = 'false';
-    switch(elt) {
+    switch (elt) {
       case 'username': { this.isUsernameModif = 'true'; break; }
       case 'email': { this.isEmailModif = 'true'; break; }
-      case 'password': { this.isPasswordModif = 'true'; break; }
       case 'wallpaper': { this.isWallpaperModif = 'true'; break; }
     }
   }
 
-  getUrlCrayon(){ return "url('https://i.pinimg.com/originals/47/0a/19/470a19a36904fe200610cc1f41eb00d9.jpg')"; }
-
   saveChanges(){
     this.isUsernameModif = 'false';
     this.isEmailModif = 'false';
-    this.isPasswordModif = 'false';
     this.isWallpaperModif = 'false';
     this.isNewSave = 'true';
     setTimeout(
@@ -46,15 +47,12 @@ export class ProfilComponent implements OnInit {
       }, 700
     );
 
-    //Stocker l'ensemble des données dans la BDD
+    // Stocker l'ensemble des données dans la BDD
   }
 
-  constructor() {}
-
   ngOnInit() {
-    this.username = 'default';
-    this.email = 'default@example.com';
-    this.password = 'password';
+    this.username  = this.user.username;
+    this.email = this.user.adress;
     this.wallpaper = '/images/wallpaper.jpg';
   }
 

@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 export interface UserDetails {
   _id: string;
-  email: string;
+  adress: string;
   username: string;
   exp: number;
   iat: number;
@@ -16,7 +16,7 @@ interface TokenResponse {
 }
 
 export interface TokenPayload {
-  email: string;
+  adress: string;
   password: string;
   username?: string;
 }

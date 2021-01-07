@@ -2,8 +2,6 @@
     text-align: center;
 }
 .test {
-    width: 25vw;
-    height: 25vh;
     overflow: auto;
 }
 
