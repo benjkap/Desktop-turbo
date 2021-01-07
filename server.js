@@ -243,31 +243,30 @@ app.post("/api/clock", function (req, res) {
     User.findOne({username: userDetails.username}, function (err, user) {
       if (err) {
         console.log("unknown error");
-        res.status(200).json('unknown');
-        return;
+        res.status(2550).json('unknown');
       } else {
-        res.status(205).json(userDetails.widgetList.clock);
+        console.log('retourne clock: ' , user.widgetList.clock);
+        res.status(225).json(user.widgetList.clock);
       }
     });
   }
   else {
-    console.log("update de la check_list " + data.name);
+    console.log("update de la check_list ", data);
     //ici traitement pré requete
     User.findOne({username: userDetails.username}, function (err, user) {
       if (err) {
         console.log("unknown error");
-        res.status(200).json('unknown');
-        return;
+        res.status(230).json('unknown');
       } else {
         user.setClock(data);
         user.save(function (err, user) {
           if (err) {
             console.error(err);
-            res.status(204).json(false);
+            res.status(234).json('false');
+          } else {
+            console.log(userDetails.username + " a été update");
+            res.status(235).json('true');
           }
-          console.log(userDetails.username + " a été update");
-          res.status(205).json(true);
-
         });
 
       }

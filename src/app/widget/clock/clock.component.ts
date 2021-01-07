@@ -2,19 +2,21 @@ import {Component, ViewChild, ElementRef, Input, OnInit, AfterViewInit, OnDestro
 import {ChangeDetectionStrategy, NgZone} from '@angular/core';
 import {Observable, timer, Subscription} from 'rxjs';
 import {timeInterval, tap, map} from 'rxjs/operators';
+import {Http} from '@angular/http';
 // import { TDate } from '../../tdate';
 import {formatDate} from '@angular/common';
 import {DatePipe} from '@angular/common';
+import {AuthService} from '../../service/auth/auth.service';
 
 @Component({
-  selector: 'cs-canvas-clock',
+  selector: 'app-clock',
   templateUrl: './clock.component.html',
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClockComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  previousUTC: string = '12:00';
+  previousUTC: string = '1:00';
 
   @ViewChild('mycanvas', {static: false, read: ElementRef}) canvasRef: ElementRef;
   public tdate = new Date();
@@ -23,7 +25,21 @@ export class ClockComponent implements OnInit, OnDestroy, AfterViewInit {
   canvasContext: CanvasRenderingContext2D;
   subscription: Subscription;
 
-  constructor(private ngZone: NgZone, private datePipe: DatePipe) {
+  constructor(private ngZone: NgZone, private datePipe: DatePipe, private http: Http, private authService: AuthService) {
+  }
+
+  private static error(error: any) {
+    const message = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(message);
+  }
+
+  public async getUTC() {
+    const req = await this.http.post('/api/clock', {token: this.authService.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(ClockComponent.error);
+    return req.fuseau;
   }
 
   ngOnInit() {
@@ -44,6 +60,14 @@ export class ClockComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnChanges(value) {
+    this.http.post('/api/clock', {token: this.authService.getToken(), data: {
+        fuseau: value,
+        isShown: true
+      }})
+      .toPromise()
+      .then(response => response.json())
+      .catch(ClockComponent.error);
+
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
