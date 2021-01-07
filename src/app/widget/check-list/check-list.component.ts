@@ -30,8 +30,8 @@ export class CheckListComponent implements OnInit {
     console.error(message);
   }
 
-  public async getUTC() {
-    const req = await this.http.post('/api/clock', {token: this.authService.getToken()})
+  public async getList() {
+    const req = await this.http.post('/api/check_list', {token: this.authService.getToken()})
       .toPromise()
       .then(response => response.json())
       .catch(CheckListComponent.error);
@@ -82,6 +82,7 @@ export class CheckListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getList();
   }
 
 }

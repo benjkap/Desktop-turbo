@@ -159,7 +159,6 @@ app.post("/api/check_list", function (req, res) {
       if (err) {
         console.log("unknown error");
         res.status(207).json('unknown');
-        return;
       } else {
         console.log(userDetails.username + " ajouté à la collection.");
         res.status(208).json(user.widgetList.toDoList);
@@ -167,22 +166,22 @@ app.post("/api/check_list", function (req, res) {
     });
   }
   else {
+    console.log("update de la check_list ", data);
     //ici traitement pré requete
     User.findOne({username: userDetails.username}, function (err, user) {
       if (err) {
         console.log("unknown error");
         res.status(209).json('unknown');
-        return;
       } else {
         user.setCheck_list(data);
         user.save(function (err, user) {
           if (err) {
             console.error(err);
             res.status(210).json(false);
+          }else {
+            console.log(userDetails.username + " ajouté à la collection.");
+            res.status(211).json(true);
           }
-          console.log(userDetails.username + " ajouté à la collection.");
-          res.status(211).json(true);
-
         });
 
       }
@@ -249,7 +248,6 @@ app.post("/api/clock", function (req, res) {
       if (err) {
         console.log("unknown error");
         res.status(216).json('unknown');
-        return;
       } else {
         res.status(217).json(user.widgetList.clock);
       }
@@ -262,7 +260,6 @@ app.post("/api/clock", function (req, res) {
       if (err) {
         console.log("unknown error");
         res.status(218).json('unknown');
-        return;
       } else {
         user.setClock(data);
         user.save(function (err, user) {
@@ -270,7 +267,6 @@ app.post("/api/clock", function (req, res) {
             console.error(err);
             res.status(219).json(false);
           }
-          console.log(userDetails.username + " a été update");
           res.status(220).json(true);
 
         });
