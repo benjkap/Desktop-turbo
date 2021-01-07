@@ -23,7 +23,7 @@ import { RepertoireComponent } from './repertoire/repertoire.component';
     HomeComponent,
     RegisterComponent,
     ClockComponent,
-    CalculatorComponent
+    CalculatorComponent,
     ProfilComponent,
     CheckListComponent,
     RepertoireComponent
