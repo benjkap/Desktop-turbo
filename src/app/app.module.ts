@@ -21,9 +21,6 @@ import { CalculatorComponent } from './widget/calculator/calculator.component';
     RegisterComponent,
     ClockComponent,
     CalculatorComponent,
-    ProfilComponent,
-    CheckListComponent,
-    RepertoireComponent
   ],
   imports: [
     FormsModule,
