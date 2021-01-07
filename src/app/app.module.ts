@@ -8,10 +8,12 @@ import {LoginComponent} from './login/login.component';
 import {HomeComponent} from './home/home.component';
 import {AppRoutingModule} from './app-routing.module';
 import {AuthService} from './service/auth/auth.service';
+import {HttpClientModule} from '@angular/common/http';
 import {RegisterComponent} from './register/register.component';
 import { ClockComponent } from './clock/clock.component';
 import { DatePipe } from '@angular/common';
-import { CalculatorComponent } from './calculator/calculator.component'; 
+import { CalculatorComponent } from './calculator/calculator.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -20,13 +22,15 @@ import { CalculatorComponent } from './calculator/calculator.component';
     HomeComponent,
     RegisterComponent,
     ClockComponent,
-    CalculatorComponent
+    CalculatorComponent,
+    FileUploadComponent
   ],
   imports: [
     FormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpModule,
+    HttpClientModule,
     ReactiveFormsModule
   ],
   providers: [AuthService, DatePipe],
