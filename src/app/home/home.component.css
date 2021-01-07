@@ -7,3 +7,14 @@
 #profilButton .first{
   width: 75px;
 }
+
+#agenda{
+  width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#note{
+  width: 1000px;
+
+}
