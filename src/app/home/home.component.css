@@ -4,9 +4,13 @@
   top: 10px;
 }
 
-#profilButton .first{
-  width: 75px;
+#username {
+  display: inline-block;
 }
+
+/*#profilButton .first{*/
+/*  width: 75px;*/
+/*}*/
 
 #disconnect, #profile {
   cursor: pointer;

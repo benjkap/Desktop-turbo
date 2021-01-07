@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 export interface UserDetails {
   _id: string;
   email: string;
-  name: string;
+  username: string;
   exp: number;
   iat: number;
 }
@@ -18,7 +18,7 @@ interface TokenResponse {
 export interface TokenPayload {
   email: string;
   password: string;
-  name?: string;
+  username?: string;
 }
 
 @Injectable()
@@ -65,6 +65,28 @@ export class AuthService {
     }
   }
 
+  public setCookie(cname, cvalue, exminutes) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exminutes * 60 * 1000));
+    const expires = 'expires=' + d.toUTCString();
+    document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
+  }
+
+  public getCookie(cname) {
+    const name = cname + '=';
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for (let c of ca) {
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return '';
+  }
+
   private logInAlert() {
     const Toast = Swal.mixin({
       toast: true,
@@ -104,17 +126,28 @@ export class AuthService {
   }
 
   public async login(loginForm: any): Promise<any> {
-    console.log(loginForm);
+    if (loginForm.remember) {
+      this.setCookie('DT_username', loginForm.username, 365 * 24 * 60);
+    }
+    if (!loginForm.remember) {
+      this.setCookie('DT_username', '', -new Date().getTime());
+    }
     const req = await this.http.post('/api/login', loginForm)
       .toPromise()
       .then(response => response.json())
       .catch(AuthService.error);
     if (req) {
-      this.saveToken(req);
-      this.logInAlert();
+      if (req === 'password' || req === 'user') {
+        return req;
+      } else {
+        this.saveToken(req);
+        this.logInAlert();
+        const redirectUrl = this.route.snapshot.queryParams.redirectUrl || '/home';
+        await this.router.navigate([redirectUrl]);
+        return true;
+      }
     }
-    const redirectUrl = this.route.snapshot.queryParams.redirectUrl || '/home';
-    await this.router.navigate([redirectUrl]);
+    return false;
   }
 
   public async register(registerForm: any): Promise<any> {

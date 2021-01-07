@@ -14,11 +14,17 @@ export class HomeComponent implements OnInit {
   ) {
   }
 
+  user = this.authService.getUserDetails();
+
   ngOnInit(): void {
     console.log(this.authService.getUserDetails());
   }
 
   public logout() {
     this.authService.logout();
+  }
+
+  public ucFirst(str: string){
+    return str.substr(0, 1).toUpperCase() + str.substr(1);
   }
 }
