@@ -1,0 +1,32 @@
+<div class="admin-panel">
+    <table class="table table-striped table-dark">
+      <thead>
+        <tr>
+          <th scope="col">UserID</th>
+          <th scope="col">Username</th>
+          <th scope="col">Email</th>
+          <th scope="col">Widgets</th>
+          <th scope="col">Reset</th>
+          <th scope="col">Supprimer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let utilisateur of listeUtilisateurs; let m = index">
+          <th scope="row">{{utilisateur.userID}}</th>
+          <td>{{utilisateur.username}}</td>
+          <td>{{utilisateur.email}}</td>
+          <td>
+            <select class="btn btn-secondary dropdown-toggle" name="widgets" (change)="selectWidget(m, $event)">
+              <option *ngFor="let widget of utilisateur.widgets; let n = index" [value]="n">{{widget.nom}}</option>
+            </select>
+            <button type="button" class="btn btn-success" *ngIf="utilisateur.widgets[widgetSelection[m]].activation" (click)="utilisateur.widgets[widgetSelection[m]].activation = false">On</button>
+            <button type="button" class="btn btn-danger" *ngIf="!utilisateur.widgets[widgetSelection[m]].activation" (click)="utilisateur.widgets[widgetSelection[m]].activation = true">Off</button>
+          </td>
+          <td><button type="button" class="btn btn-warning" (click)="resetAccount(utilisateur)">Reset</button></td>
+          <td><button type="button" class="btn btn-danger" (click)="deleteAccount(utilisateur)">Supprimer</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  
