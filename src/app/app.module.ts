@@ -14,9 +14,9 @@ import {HomeComponent} from './home/home.component';
 import {AppRoutingModule} from './app-routing.module';
 import {AuthService} from './service/auth/auth.service';
 import {RegisterComponent} from './register/register.component';
-import { AgendaComponent } from './widgets/agenda/agenda.component';
-import { NoteComponent } from './widgets/note/note.component';
-import { SnoteComponent } from './widgets/note/note/snote.component';
+import { AgendaComponent } from './widget/agenda/agenda.component';
+import { NoteComponent } from './widget/note/note.component';
+import { SnoteComponent } from './widget/note/note/snote.component';
 import { ClockComponent } from './widget/clock/clock.component';
 import { DatePipe } from '@angular/common';
 import { CalculatorComponent } from './widget/calculator/calculator.component';
@@ -33,9 +33,9 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
     LoginComponent,
     HomeComponent,
     RegisterComponent,
-    AgendaComponent, 
-    NoteComponent, 
-    SnoteComponent, 
+    AgendaComponent,
+    NoteComponent,
+    SnoteComponent,
     DragDropComponent,
     RegisterComponent,
     ClockComponent,
