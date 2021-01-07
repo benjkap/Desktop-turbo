@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckListComponent implements OnInit {
 
+  menuCheckList: boolean = false;
   newElement: string = '';
   //toDoList à récupérer dans la database
   listElement: string[] = ["Premiere liste", "chose à faire", "temps restant", "course à faire"];
@@ -17,19 +18,37 @@ export class CheckListComponent implements OnInit {
 
   changeCheckList(element: string, j:number){
     this.nomCheckList = element;
+    this.menuCheckList = false;
     //il faut modifier la toDoList pour changer les éléments
     //this.toDoList = this.listCheckList[j];
   }
 
-  onAdd() {
+  onAddCheckList() {
     if (this.newElement != ''){
       this.toDoList.push({ key: this.newElement, value: false });
       this.newElement = '';
     }
   }
 
-  onDelete(i: number) {
+  onAddNewCheckList() {
+    this.listElement.push("NewCheckList");
+    this.nomCheckList = "NewCheckList";
+    this.menuCheckList = false;
+  }
+
+  onDeleteElementList(i: number) {
     this.toDoList.splice(i,1);
+  }
+
+  onDeleteCheckList(j: number) {
+    this.listElement.splice(j,1);
+    //supprimer l'ensemble des données dans listCheckList
+  }
+
+  resetAllCheckList(){
+    this.listElement = [];
+    this.toDoList = [];
+    //this.listCheckList = [];
   }
 
   isChecked(i: number) {
