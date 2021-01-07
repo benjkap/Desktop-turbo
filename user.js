@@ -10,42 +10,42 @@ var clockSchema = new mongoose.Schema({
   isShown : {
     type : Boolean,
     default : true
-  }, 
+  },
 });
 mongoose.model('clockSchema', clockSchema,);
 
 var shortcutSchema = new mongoose.Schema({
-  name: String, 
-  link : String, 
+  name: String,
+  link : String,
   icon: String,
 });
 mongoose.model('shortcutSchema',shortcutSchema ,);
 
 var calendarSchema = new mongoose.Schema({
   start : Date,
-  end :Date, 
+  end :Date,
   motive: String,
 });
 mongoose.model('calendarSchema',calendarSchema ,);
 
 var toDoListSchema = new mongoose.Schema({
-  name:String,
+  Array:[{name:String,
   subString:[{
     name: String,
     valid :Boolean
-  }]
+  }]}]
 });
 mongoose.model('toDoListSchema', toDoListSchema,);
 
 var contactSchema = new mongoose.Schema({
-  name : String, 
-  phone : String, 
+  name : String,
+  phone : String,
   Email : String
 });
 mongoose.model('contactSchema',contactSchema ,);
 
 var notificationSchema = new mongoose.Schema({
-  content : String, 
+  content : String,
   reason : String
 });
 mongoose.model('notificationSchema',notificationSchema ,);
@@ -58,7 +58,7 @@ var widgetListSchema = new mongoose.Schema({
     list : [{type : shortcutSchema}],
     isShown : {type : Boolean,default: true}
   },
-    
+
   calendar: {
     list : [{type : calendarSchema}],
     isShown : {type : Boolean,default : true}
@@ -77,7 +77,7 @@ var widgetListSchema = new mongoose.Schema({
   calculator : {isShown :{ type :Boolean,default : true }
     },
 
-  contacts : { 
+  contacts : {
     list :[{type : contactSchema}],
     isShown : { type :Boolean,default : true }
       },
@@ -109,8 +109,8 @@ let userSchema = new mongoose.Schema({
   salt: String,
   isAdmin : Boolean,
   widgetList : {type : widgetListSchema},
-  
-  
+
+
 });
 
 
