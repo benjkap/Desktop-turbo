@@ -81,6 +81,7 @@ app.post("/api/login", function (req, res) {
     User.findOne({username: login.username}, function (err, user) {
       if (err) {
         console.log("unknown error");
+        res.status(200).json('unknown');
         return;
       }
 
@@ -119,17 +120,22 @@ app.post("/api/register", function (req, res) {
   } else {
 
     //ici traitement pré requete
-    var user = new User()
+    var user = new User();
     //ici la requète
     user.username = register.username;
     user.adress = register.email;
     user.setPassword(register.password);
     user.save(function (err, user) {
-      if (err) return console.error(err);
-      console.log(user.username + " saved to user collection.");
-    })
+      if (err) {
+        console.error(err);
+        res.status(204).json(false);
+      }
+      console.log(user.username + " ajouté à la collection.");
+      res.status(205).json(true);
 
-    res.status(203).json();
+    });
+
+    res.status(206).json(false);
 
   }
 

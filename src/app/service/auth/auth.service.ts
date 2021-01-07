@@ -156,6 +156,7 @@ export class AuthService {
       .then(response => response.json())
       .catch(AuthService.error);
     await this.router.navigate(['/login']);
+    return req;
   }
 
   public logout(): void {

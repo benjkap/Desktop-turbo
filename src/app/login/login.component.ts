@@ -64,10 +64,18 @@ export class LoginComponent implements OnInit {
     this.error.password = false;
   }
 
+  errorUnknown() {
+    this.errorAlert('Erreur inconnue');
+    this.error.username = false;
+    this.error.password = false;
+  }
+
   async onSubmit(f: NgForm): Promise<void> {
     const connection = await this.authService.login(f.value);
     if (connection === 'user') { this.errorUser(); }
     if (connection === 'password') { this.errorPassword(); }
+    if (connection === 'unknown') { this.errorUnknown(); }
+
   }
 
 }
