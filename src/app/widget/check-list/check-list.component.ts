@@ -1,25 +1,30 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnChanges} from '@angular/core';
 import {AuthService} from '../../service/auth/auth.service';
 import {Http} from '@angular/http';
+import * as mongoose from 'mongoose';
+
+const toDoListSchema = new mongoose.Schema({
+  Array: [{name: String,
+    subString: [{
+      name: String,
+      valid : Boolean
+    }]}]
+});
 
 @Component({
   selector: 'app-check-list',
   templateUrl: './check-list.component.html',
   styleUrls: ['./check-list.component.scss']
 })
-export class CheckListComponent implements OnInit {
+export class CheckListComponent implements OnInit, OnChanges {
 
-  menuCheckList = false;
+  menuCheckList = true;
   newElement = '';
-  // toDoList à récupérer dans la database
-  listElement: string[] = ['Premiere liste', 'chose à faire', 'temps restant', 'course à faire'];
+  data = {
+    category: [],
+    isShown: Boolean
+  };
   numEltCheckList = 0;
-  toDoList: { key: string, value: boolean }[] = [{key: 'tache1', value: false}, {key: 'tache2', value: false}, {
-    key: 'tache3',
-    value: true
-  }, {key: 'tache4', value: false}, {key: 'tache5', value: true}];
-  // ça doit ressembler à quelque chose du style good luck have fun
-  // listCheckList: {key: number, [{element: string, valeur: boolean}]} = "";
 
   constructor(private http: Http, private authService: AuthService) {
   }
@@ -31,11 +36,25 @@ export class CheckListComponent implements OnInit {
   }
 
   public async getList() {
-    const req = await this.http.post('/api/check_list', {token: this.authService.getToken()})
+    return await this.http.post('/api/check_list', {token: this.authService.getToken()})
       .toPromise()
       .then(response => response.json())
       .catch(CheckListComponent.error);
-    console.log(req);
+  }
+
+  public async updateList(data) {
+    return await this.http.post('/api/check_list', {token: this.authService.getToken(), data: data})
+      .toPromise()
+      .then(response => response.json())
+      .catch(CheckListComponent.error);
+  }
+
+  public getTask(id) {
+    return this.data.category[id].subString;
+  }
+
+  public getCatName(id) {
+    return this.data.category[id].name;
   }
 
   changeCheckList(j: number) {
@@ -45,44 +64,57 @@ export class CheckListComponent implements OnInit {
     // this.toDoList = this.listCheckList[j];
   }
 
-  onAddCheckList() {
+  // ajout tache
+  onAddCheckList(id) {
     if (this.newElement !== '') {
-      this.toDoList.push({key: this.newElement, value: false});
+      this.data.category[id].subString.push({
+        name: this.newElement,
+        valid: false
+      });
       this.newElement = '';
     }
+    this.updateList(this.data);
   }
 
+  // ajout cat
   onAddNewCheckList() {
-    this.listElement.push('NewCheckList');
-    this.numEltCheckList = this.listElement.length - 1;
-    this.menuCheckList = false;
+    this.data.category.push({
+        name: 'Nouvelle liste',
+        subString: []
+    });
+    this.updateList(this.data);
   }
 
-  onDeleteElementList(i: number) {
-    this.toDoList.splice(i, 1);
+  onDeleteElementList(id: number, i: number) {
+    this.data.category[id].subString.splice(i, 1);
+    this.updateList(this.data);
   }
 
-  onDeleteCheckList(j: number) {
-    this.listElement.splice(j, 1);
-    // supprimer l'ensemble des données dans listCheckList
+  onDeleteCheckList(id: number) {
+    this.data.category.splice(id, 1);
+    this.updateList(this.data);
   }
 
   resetAllCheckList() {
-    this.listElement = [];
-    this.toDoList = [];
-    // this.listCheckList = [];
+    this.data.category = [];
+    this.updateList(this.data);
   }
 
-  isChecked(i: number) {
-    return this.toDoList[i].value;
+  isChecked(id: number, i: number) {
+    return this.data.category[id].subString[i].valid;
   }
 
-  alterCheck(i: number) {
-    this.toDoList[i].value = !this.isChecked(i);
+  alterCheck(id: number, i: number) {
+    this.data.category[id].subString[i].valid = !this.isChecked(id, i);
+    this.updateList(this.data);
   }
 
-  ngOnInit(): void {
-    this.getList();
+  async ngOnInit(): Promise<void> {
+    this.data = await this.getList();
+    console.log(this.data);
+  }
+
+  ngOnChanges(): any {
   }
 
 }
