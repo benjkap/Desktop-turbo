@@ -24,20 +24,36 @@
         Déconnexion</a>
     </div>
   </div>
-</div>
 
-<div id="clock">
+</div>
+<script>
+  function dragstart_handler(ev) {
+   // On ajoute l'identifiant de l'élément cible à l'objet de transfert
+   ev.dataTransfer.setData("text/plain", ev.target.innerText);
+  }
+  </script>
+  
+
+<div id="clock" cdkDrag>
   <app-clock></app-clock>
 </div>
 
-<div id="calculor">
+<div id="calculor" cdkDrag>
   <ng-calculator></ng-calculator>
 </div>
 
-<div id="check-list" class="jumbotron pt-2 pb-2 m-0">
+<div id="check-list" class="jumbotron pt-2 pb-2 m-0" cdkDrag>
   <app-check-list></app-check-list>
 </div>
 
-<div id="repertoire" class="jumbotron pt-2 pb-2 m-0">
+<div id="repertoire" class="jumbotron pt-2 pb-2 m-0" cdkDrag>
   <app-repertoire></app-repertoire>
 </div>
+
+<div id="agenda" class="pt-5 mt-5" cdkDrag>
+
+  <app-agenda></app-agenda>
+</div>
+
+  <app-note></app-note>
+
