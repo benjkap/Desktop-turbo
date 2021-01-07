@@ -5,12 +5,62 @@ let jwt = require('jsonwebtoken');
 let userSchema = new mongoose.Schema({
   adress: {
     type: String,
+    require: true,
+    unique : true,
   },
   username: {
     type: String,
+    require: true,
+    unique : true,
   },
+  background:{
+    type : String,
+    default : "https://i.pinimg.com/originals/d9/1a/92/d91a92581c3e0209d7080c96000c5912.jpg"
+  } ,
   hash: String,
-  salt: String
+  salt: String,
+  isAdmin : Boolean,
+  widgetList : {
+    clock : {fuseau : String, isShown : Boolean },
+    shortcuts :{list : [{
+      name: String, 
+      link : String, 
+      icon: String,
+    }],
+    isShown : Boolean
+  },
+    calendar: {
+      start : Date,
+      end :Date, 
+      motive:String,
+      isShown : Boolean
+    },
+    notepad : {list :[String], isShown : Boolean,},
+    toDoList :{category : [{
+      name:String,
+      subString:[{
+        name: String,
+        valid :Boolean
+      }]
+    }],
+    isShown : Boolean
+  },
+    calculator : {isShown : Boolean},
+    contacts : [{
+      name : String, 
+      phone : String, 
+      Email : String
+    }],
+    notifications :{
+       list : [{
+        content : String, 
+        reason : String
+    }],
+        isShown : Boolean
+  }
+  },
+  
+  
 });
 
 
