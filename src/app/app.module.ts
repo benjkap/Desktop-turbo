@@ -9,9 +9,9 @@ import {HomeComponent} from './home/home.component';
 import {AppRoutingModule} from './app-routing.module';
 import {AuthService} from './service/auth/auth.service';
 import {RegisterComponent} from './register/register.component';
-import { ClockComponent } from './clock/clock.component';
+import { ClockComponent } from './widget/clock/clock.component';
 import { DatePipe } from '@angular/common';
-import { CalculatorComponent } from './calculator/calculator.component'; 
+import { CalculatorComponent } from './widget/calculator/calculator.component';
 
 @NgModule({
   declarations: [

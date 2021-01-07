@@ -8,9 +8,19 @@
   display: inline-block;
 }
 
-/*#profilButton .first{*/
-/*  width: 75px;*/
-/*}*/
+#calculor {
+  width: 378px;
+  position: absolute;
+  top : 10px;
+  left: 120px;
+}
+
+#clock {
+  width: 100px;
+  position: absolute;
+  top : 10px;
+  left: 10px;
+}
 
 #disconnect, #profile {
   cursor: pointer;
