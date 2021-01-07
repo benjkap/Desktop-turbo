@@ -17,8 +17,7 @@ var clockSchema = new mongoose.Schema({
     type : Boolean,
     default : true
   }, 
-  xCoordinates : Number,
-  yCoordinates : Number
+  coordinates : {type : coordinatesSchema}
 });
 mongoose.model('clockSchema', clockSchema,);
 
