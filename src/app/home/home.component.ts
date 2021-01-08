@@ -12,8 +12,6 @@ import {DragDropModule, CdkDragDrop, CdkDragEnd, CdkDragMove} from '@angular/cdk
   providers: [AuthService]
 })
 export class HomeComponent implements OnInit, OnDestroy {
-
-export class HomeComponent implements OnInit {
   dragPositionClock = {x: 0, y: 0};
   dragPositionCheck = {x: 0, y: 0};
   dragPositionCalc = {x: 0, y: 0};
