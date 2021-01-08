@@ -41,4 +41,30 @@
         <input type="text" class="form-control bg-light w-50 mt-3 mx-auto" [(ngModel)]="wallpaper" (change)="updateBackground(wallpaper)" />
       </li>
     </ul>
-  </div>
+</div>
+
+<div class="boutonModificationWidget">
+  <button type="button" class="btn btn-success mt-3" (click)="activerModificationWidget = true" *ngIf="!activerModificationWidget">Modifier la liste des widgets</button>
+  <button type="button" class="btn btn-success mt-3" (click)="activerModificationWidget = false" *ngIf="activerModificationWidget">Arrêter la modification</button>
+</div>
+
+<div class="selectionWidgets" *ngIf="activerModificationWidget">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Nom du widget</th>
+        <th scope="col">Activation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let widget of listeDesWidgets; let o = index">
+        <th scope="row">{{listeDesWidgets[o].nomWidget}}</th>
+        <td>
+          <button type="button" class="btn btn-danger" *ngIf="listeDesWidgets[o].estActive" (click)="listeDesWidgets[o].estActive = false">On</button>
+          <button type="button" class="btn btn-warning" *ngIf="!listeDesWidgets[o].estActive" (click)="listeDesWidgets[o].estActive = true">Off</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  

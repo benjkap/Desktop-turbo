@@ -9,14 +9,6 @@ var coordinatesSchema = new mongoose.Schema({
 mongoose.model('coordinatesSchema', coordinatesSchema,);
 
 var clockSchema = new mongoose.Schema({
-  fuseau : {
-    type : String,
-    default : 12
-  },
-  isShown : {
-    type : Boolean,
-    default : true
-  },
   coordinates : {type : coordinatesSchema}
 });
 mongoose.model('clockSchema', clockSchema,);
@@ -60,7 +52,12 @@ mongoose.model('notificationSchema',notificationSchema ,);
 
 var widgetListSchema = new mongoose.Schema({
 
-  clock : {type : clockSchema},
+  clock : {clock :{type : clockSchema},
+  isShown : {
+    type : Boolean,
+    default : true
+  }},
+  
 
   shortcuts :{
     list : [{shortcut : {type : shortcutSchema}, coordinates : {type : coordinatesSchema}}],
@@ -120,7 +117,7 @@ let userSchema = new mongoose.Schema({
   } ,
   hash: String,
   salt: String,
-  isAdmin : Boolean,
+  isAdmin : {type: Boolean, default : false},
   widgetList : {type : widgetListSchema},
 
 
@@ -148,6 +145,9 @@ userSchema.methods.setContact = function(list) {
 userSchema.methods.setProfile = function(Profile) {
   this.widgetList.profile=Profile;
 };
+userSchema.methods.setNote = function(note) {
+  this.widgetList.notepad=note;
+};
 userSchema.methods.setClock = function(fuseauH) {
   this.widgetList.clock=fuseauH;
 };
@@ -163,6 +163,7 @@ userSchema.methods.generateJwt = function() {
     _id: this._id,
     adress: this.adress,
     username: this.username,
+    isAdmin : this.isAdmin,
     exp: parseInt(expiry.getTime() / 1000),
   }, "coucouJeSuisLaClefSecreteMaisJeDevraisPasEtreDansLeCodeMaisJeSaisPAsOuAllerDoncJeVaisLa"); // DO NOT KEEP YOUR SECRET IN THE CODE!
 };

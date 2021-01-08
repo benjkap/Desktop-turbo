@@ -445,7 +445,7 @@ app.post("/api/agenda", function (req, res) {
         console.log("unknown error");
         res.status(232).json('unknown');
       } else {
-        res.status(233).json(userDetails.widgetList.calendar);
+        res.status(233).json(use.widgetList.calendar);
       }
     });
   } else {
@@ -470,6 +470,49 @@ app.post("/api/agenda", function (req, res) {
     });
   }
 });
+
+app.post("/api/note", function (req, res) {
+
+  let token = req.body.token;
+  let data = req.body.data;
+  if (token === undefined) {
+    manageError(res, "Invalid product input", "token is mandatory.", 402);
+    return;
+  }
+  let userDetails;
+  userDetails = getUserDetails(token);
+  if (data === undefined) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(235).json('unknown');
+      } else {
+        res.status(236).json(user.widgetList.notepad);
+      }
+    });
+  } else {
+    //ici traitement pré requete
+    User.findOne({_id: userDetails._id}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(237).json('unknown');
+      } else {
+        user.setNote(data);
+        user.save(function (err, user) {
+          if (err) {
+            console.error(err);
+            res.status(238).json(false);
+          } else {
+            console.log(userDetails.username + " a été update");
+            res.status(239).json(true);
+          }
+        });
+
+      }
+    });
+  }
+});
+
 app.post("/api/coords/clock", function (req, res) {
 
   let token = req.body.token;

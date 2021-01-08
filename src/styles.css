@@ -10,5 +10,5 @@
 @import '../node_modules/@syncfusion/ej2-angular-schedule/styles/material.css';
 
 body, html {
-  overflow: hidden;
+  width: 100%;
 }

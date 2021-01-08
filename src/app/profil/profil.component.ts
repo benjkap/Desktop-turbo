@@ -118,5 +118,8 @@ export class ProfilComponent implements OnInit, OnChanges{
   ngOnChanges() {
   }
 
+  listeDesWidgets: {nomWidget: string, estActive: boolean}[] = [{nomWidget: "Agendas", estActive: true},{nomWidget: "toDoList", estActive: false},{nomWidget: "Bloc-note", estActive: true}, {nomWidget: "lhebfzhe", estActive: false}, {nomWidget: "Bloc-neuehf", estActive: true}]
+
+  activerModificationWidget: boolean = false;
 
 }
