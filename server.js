@@ -816,7 +816,7 @@ app.post("/api/visibility/check", function (req, res) {
       console.log("unknown error");
       res.status(272).json('unknown');
     } else {
-      res.status(273).json(user.widgetList.check.isShown);
+      res.status(273).json(user.widgetList.toDoList.isShown);
     }
   });
 });

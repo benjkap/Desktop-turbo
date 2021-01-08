@@ -22,7 +22,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   dragPositionCalc: {x: number, y: number};
   dragPositionRep: {x: number, y: number};
   dragPositionAgenda: {x: number, y: number};
-
+  clockVisibility: false;
+  checkVisibility = false;
+  calcVisibility = false;
+  repVisibility = false;
+  agendaVisibility = false;
   user = this.authService.getUserDetails();
   clock: any;
   check: any;
@@ -57,6 +61,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     document.body.style.background = 'url(\'' + await this.getBackground() + '\')  no-repeat center center fixed';
     document.body.style.backgroundSize = 'cover';
+    this.clockVisibility = await this.getClockVisibility();
+    this.checkVisibility = await this.getCheckVisibility();
+    this.calcVisibility = await this.getCalcVisibility();
+    this.repVisibility =  await this.getRepVisibility();
+    this.agendaVisibility = await this.getAgendaVisibility();
     this.dragPositionClock = await this.getClockCo();
     this.dragPositionCheck = await this.getCheckCo();
     this.dragPositionCalc = await this.getCalcCo();
@@ -178,7 +187,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .catch(HomeComponent.error);
   }
   public async updateCalcCo(event: CdkDragEnd){
-    return await this.http.post('/api/coords/calc', {token: this.authService.getToken(), coords:event.source.getFreeDragPosition()})
+    return await this.http.post('/api/coords/calc', {token: this.authService.getToken(), coords: event.source.getFreeDragPosition()})
       .toPromise()
       .then(response => response.json())
       .catch(HomeComponent.error);
