@@ -148,6 +148,9 @@ userSchema.methods.setContact = function(list) {
 userSchema.methods.setProfile = function(Profile) {
   this.widgetList.profile=Profile;
 };
+userSchema.methods.setNote = function(note) {
+  this.widgetList.notepad=note;
+};
 userSchema.methods.setClock = function(fuseauH) {
   this.widgetList.clock=fuseauH;
 };

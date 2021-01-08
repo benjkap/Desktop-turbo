@@ -27,12 +27,12 @@ export class SnoteComponent {
     }
     alert('clicked!');
   }
-  
+
   onDismiss(event){
     this.dismiss.emit(event);
   }
-  
+
   onFocusOut(event){
-    this.focusout.emit(event)
+    this.focusout.emit(event);
   }
 }
