@@ -9,14 +9,6 @@ var coordinatesSchema = new mongoose.Schema({
 mongoose.model('coordinatesSchema', coordinatesSchema,);
 
 var clockSchema = new mongoose.Schema({
-  fuseau : {
-    type : String,
-    default : 12
-  },
-  isShown : {
-    type : Boolean,
-    default : true
-  }, 
   coordinates : {type : coordinatesSchema}
 });
 mongoose.model('clockSchema', clockSchema,);
@@ -60,7 +52,12 @@ mongoose.model('notificationSchema',notificationSchema ,);
 
 var widgetListSchema = new mongoose.Schema({
 
-  clock : {type : clockSchema},
+  clock : {clock :{type : clockSchema},
+  isShown : {
+    type : Boolean,
+    default : true
+  }},
+  
 
   shortcuts :{
     list : [{shortcut : {type : shortcutSchema}, coordinates : {type : coordinatesSchema}}],
