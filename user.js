@@ -3,8 +3,8 @@ let crypto = require('crypto');
 let jwt = require('jsonwebtoken');
 
 var coordinatesSchema = new mongoose.Schema({
-  xCoordinates : Number,
-  yCoordinates : Number
+  x : Number,
+  y : Number
 })
 mongoose.model('coordinatesSchema', coordinatesSchema,);
 
@@ -48,12 +48,12 @@ mongoose.model('notificationSchema',notificationSchema ,);
 
 var widgetListSchema = new mongoose.Schema({
 
-  clock : {coordinates : {type : coordinatesSchema}},
+  clock : {coordinates : {type : coordinatesSchema},
   isShown : {
     type : Boolean,
     default : true
-  },
-  
+  }},
+
 
   shortcuts :{
     list : [{shortcut : {type : shortcutSchema}, coordinates : {type : coordinatesSchema}}],

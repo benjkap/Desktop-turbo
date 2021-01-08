@@ -18,7 +18,6 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 
-let clockSchema = mongoose.model('clockSchema');
 let shortcutSchema = mongoose.model('shortcutSchema');
 let calendarSchema = mongoose.model('calendarSchema');
 let toDoListSchema = mongoose.model('toDoListSchema');
@@ -542,10 +541,9 @@ app.post("/api/coords/clock", function (req, res) {
       } else {
 
         let tmp = new coordinatesSchema();
-        tmp.xCoordinates =coords.x;
-        tmp.yCoordinates =coords.y;
-        let clock = new clockSchema(tmp);
-        user.widgetList.clock.clock=clock;
+        tmp.x = coords.x;
+        tmp.y = coords.y;
+        user.widgetList.clock.coordinates=tmp;
         user.save(function (err, user) {
           if (err) {
             console.error(err);
@@ -586,7 +584,10 @@ app.post("/api/coords/check", function (req, res) {
         console.log("unknown error");
         res.status(244).json('unknown');
       } else {
-        user.widgetList.toDoList.coordinates=coords;
+        let tmp = new coordinatesSchema();
+        tmp.x = coords.x;
+        tmp.y = coords.y;
+        user.widgetList.toDoList.coordinates=tmp;
         user.save(function (err, user) {
           if (err) {
             console.error(err);
@@ -627,7 +628,10 @@ app.post("/api/coords/calc", function (req, res) {
         console.log("unknown error");
         res.status(249).json('unknown');
       } else {
-        user.widgetList.calculator.coordinates=coords;
+        let tmp = new coordinatesSchema();
+        tmp.x = coords.x;
+        tmp.y = coords.y;
+        user.widgetList.calculator.coordinates=tmp;
         user.save(function (err, user) {
           if (err) {
             console.error(err);
@@ -668,7 +672,10 @@ app.post("/api/coords/rep", function (req, res) {
         console.log("unknown error");
         res.status(254).json('unknown');
       } else {
-        user.widgetList.contacts.coordinates=coords;
+        let tmp = new coordinatesSchema();
+        tmp.x = coords.x;
+        tmp.y = coords.y;
+        user.widgetList.contacts.coordinates=tmp;
         user.save(function (err, user) {
           if (err) {
             console.error(err);
@@ -709,7 +716,10 @@ app.post("/api/coords/agenda", function (req, res) {
         console.log("unknown error");
         res.status(259).json('unknown');
       } else {
-        user.widgetList.calendar.coordinates=coords;
+        let tmp = new coordinatesSchema();
+        tmp.x = coords.x;
+        tmp.y = coords.y;
+        user.widgetList.calendar.coordinates=tmp;
         user.save(function (err, user) {
           if (err) {
             console.error(err);
