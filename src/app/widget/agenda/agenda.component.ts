@@ -14,7 +14,7 @@ declare let require: Function;
 })
 export class AgendaComponent implements OnInit {
 
-  public selectedDate: Date = new Date(2018, 1, 15);
+  public selectedDate: Date = new Date(2021, 1, 8);
   public data: object [] = [{
     Id: 2,
     EventName: 'Meeting',
