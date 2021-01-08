@@ -24,7 +24,18 @@ export class AuthGuard implements CanActivate {
       console.log('Vous n\'êtes pas connectés');
       this.router.navigate(['/login'], {queryParams: {redirectUrl: state.url}});
     }
-    return isLoggedIn;
+
+    const roles = next.data.roles;
+    let isAdmin = true;
+    if (roles) {
+      isAdmin = this.authService.hasAdmin();
+      if (!isAdmin) {
+        console.log('Vous n\'êtes pas admin');
+        this.router.navigate(['/home']);
+      }
+    }
+
+    return isLoggedIn && isAdmin;
   }
 
 }

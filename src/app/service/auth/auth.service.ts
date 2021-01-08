@@ -4,6 +4,7 @@ import {Http} from '@angular/http';
 import Swal from 'sweetalert2';
 
 export interface UserDetails {
+  isAdmin: boolean;
   _id: string;
   adress: string;
   username: string;
@@ -32,6 +33,8 @@ export class AuthService {
     private route: ActivatedRoute,
     private http: Http
   ) {
+
+    console.log(this.getUserDetails());
   }
 
   // Error handling
@@ -39,6 +42,10 @@ export class AuthService {
     const message = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(message);
+  }
+
+  public hasAdmin() {
+    return this.getUserDetails().isAdmin;
   }
 
   private saveToken(token: string): void {
