@@ -33,26 +33,26 @@
   }
   </script>
 
-  <div id="clock"  [ngClass]="statusClass2" (click)="setActiveClass2()" (cdkDragStarted)="setActiveClass2()" cdkDrag [cdkDragData]="clock" (cdkDragEnded)="updateClockCo($event)" [cdkDragFreeDragPosition]="dragPositionClock">
+  <div id="clock"  [ngClass]="statusClass2" (click)="setActiveClass2()" (cdkDragStarted)="setActiveClass2()" cdkDrag [cdkDragData]="clock" (cdkDragEnded)="updateClockCo($event)" [cdkDragFreeDragPosition]="dragPositionClock"*ngIf="getClockVisibility()">
     <app-clock></app-clock>
   </div>
 
-  <div id="calculor"  [ngClass]="statusClass1" (click)="setActiveClass1()" (cdkDragStarted)="setActiveClass1()" cdkDrag [cdkDragData]="calculator"(cdkDragEnded)="updateCalcCo($event)"[cdkDragFreeDragPosition]="dragPositionCalc">
+  <div id="calculor"  [ngClass]="statusClass1" (click)="setActiveClass1()" (cdkDragStarted)="setActiveClass1()" cdkDrag [cdkDragData]="calculator"(cdkDragEnded)="updateCalcCo($event)"[cdkDragFreeDragPosition]="dragPositionCalc"*ngIf="getCalcVisibility()">
     <ng-calculator></ng-calculator>
   </div>
 
-  <div id="check-list" class="jumbotron pt-2 pb-2 m-0" [ngClass]="statusClass5" (click)="setActiveClass5()" (cdkDragStarted)="setActiveClass5()" cdkDrag [cdkDragData]="check"(cdkDragEnded)="updateCheckCo($event)"[cdkDragFreeDragPosition]="dragPositionCheck">
+  <div id="check-list" class="jumbotron pt-2 pb-2 m-0" [ngClass]="statusClass5" (click)="setActiveClass5()" (cdkDragStarted)="setActiveClass5()" cdkDrag [cdkDragData]="check"(cdkDragEnded)="updateCheckCo($event)"[cdkDragFreeDragPosition]="dragPositionCheck"*ngIf="getCheckVisibility()">
     <app-check-list></app-check-list>
   </div>
 
-  <div id="repertoire" [ngClass]="statusClass4" (click)="setActiveClass4()" (cdkDragStarted)="setActiveClass4()" class="jumbotron pt-2 pb-2 m-0" cdkDrag [cdkDragData]="rep"(cdkDragEnded)="updateRepCo($event)"[cdkDragFreeDragPosition]="dragPositionRep">
+  <div id="repertoire" [ngClass]="statusClass4" (click)="setActiveClass4()" (cdkDragStarted)="setActiveClass4()" class="jumbotron pt-2 pb-2 m-0" cdkDrag [cdkDragData]="rep"(cdkDragEnded)="updateRepCo($event)"[cdkDragFreeDragPosition]="dragPositionRep"*ngIf="getRepVisibility()">
     <app-repertoire></app-repertoire>
   </div>
 
-  <div id="agenda" class="pt-5 mt-5"  [ngClass]="statusClass3" (click)="setActiveClass3()" (cdkDragStarted)="setActiveClass3()" cdkDrag [cdkDragData]="agenda"(cdkDragEnded)="updateAgendaCo($event)"[cdkDragFreeDragPosition]="dragPositionAgenda">
+  <div id="agenda" class="pt-5 mt-5"  [ngClass]="statusClass3" (click)="setActiveClass3()" (cdkDragStarted)="setActiveClass3()" cdkDrag [cdkDragData]="agenda"(cdkDragEnded)="updateAgendaCo($event)"[cdkDragFreeDragPosition]="dragPositionAgenda"*ngIf="getAgendaVisibility()">
   <app-agenda></app-agenda>
 </div>
 
-<div [ngClass]="statusClass6" (click)="setActiveClass6()" (cdkDragStarted)="setActiveClass6()">
+<div [ngClass]="statusClass6" (click)="setActiveClass6()"(cdkDragStarted)="setActiveClass6()">
   <app-note></app-note>
 </div>

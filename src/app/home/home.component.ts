@@ -1,8 +1,7 @@
 import {Component, OnInit, OnDestroy, NgModule} from '@angular/core';
 import {AuthService} from '../service/auth/auth.service';
 import {Http} from '@angular/http';
-import {CdkDragEnd, CdkDragMove} from '@angular/cdk/drag-drop';
-import {toNumbers} from "@angular/compiler-cli/src/diagnostics/typescript_version";
+import {CdkDragEnd, CdkDragMove, CdkDragStart} from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -30,26 +29,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   rep: any;
   agenda: any;
   calculator: any;
-  dataClock: {
-    x: 0;
-    y: 0;
-  };
-  dataCheck: {
-    x: 0;
-    y: 0;
-  };
-  dataAgenda: {
-    x: 0;
-    y: 0;
-  };
-  dataRep: {
-    x: 0;
-    y: 0;
-  };
-  dataCalculator: {
-    x: 0;
-    y: 0;
-  };
 
   statusClass1 = 'not-active';
 
@@ -78,7 +57,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     document.body.style.background = 'url(\'' + await this.getBackground() + '\')  no-repeat center center fixed';
     document.body.style.backgroundSize = 'cover';
-    console.log(await this.getClockCo(), await this.getCheckCo(), await this.getCalcCo(), await this.getRepCo(), await this.getAgendaCo());
     this.dragPositionClock = await this.getClockCo();
     this.dragPositionCheck = await this.getCheckCo();
     this.dragPositionCalc = await this.getCalcCo();
@@ -98,7 +76,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   setActiveClass1(){
-    if (this.statusClass1 == 'not-active'){
+    if (this.statusClass1 === 'not-active'){
       this.statusClass1 = 'active';
       this.statusClass2 = 'not-active';
       this.statusClass3 = 'not-active';
@@ -109,7 +87,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   setActiveClass2(){
-    if (this.statusClass2 == 'not-active'){
+    if (this.statusClass2 === 'not-active'){
       this.statusClass2 = 'active';
       this.statusClass1 = 'not-active';
       this.statusClass3 = 'not-active';
@@ -120,7 +98,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   setActiveClass3(){
-    if (this.statusClass3 == 'not-active'){
+    if (this.statusClass3 === 'not-active'){
       this.statusClass3 = 'active';
       this.statusClass1 = 'not-active';
       this.statusClass4 = 'not-active';
@@ -131,7 +109,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   setActiveClass4(){
-    if (this.statusClass4 == 'not-active'){
+    if (this.statusClass4 === 'not-active'){
       this.statusClass4 = 'active';
       this.statusClass3 = 'not-active';
       this.statusClass2 = 'not-active';
@@ -142,7 +120,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   setActiveClass5(){
-    if (this.statusClass5 == 'not-active'){
+    if (this.statusClass5 === 'not-active'){
       this.statusClass5 = 'active';
       this.statusClass1 = 'not-active';
       this.statusClass2 = 'not-active';
@@ -153,7 +131,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   setActiveClass6(){
-    if (this.statusClass6 == 'not-active'){
+    if (this.statusClass6 === 'not-active'){
       this.statusClass6 = 'active';
       this.statusClass1 = 'not-active';
       this.statusClass2 = 'not-active';
@@ -176,7 +154,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .catch(HomeComponent.error);
   }
   public async updateCheckCo(event: CdkDragEnd){
-    return await this.http.post('/api/coords/check', {token: this.authService.getToken(), coords: this.dragPosition})
+    return await this.http.post('/api/coords/check', {token: this.authService.getToken(), coords: event.source.getFreeDragPosition()})
       .toPromise()
       .then(response => response.json())
       .catch(HomeComponent.error);
@@ -188,7 +166,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .catch(HomeComponent.error);
   }
   public async updateRepCo(event: CdkDragEnd){
-    return await this.http.post('/api/coords/rep', {token: this.authService.getToken(), coords: this.dragPosition})
+    return await this.http.post('/api/coords/rep', {token: this.authService.getToken(), coords: event.source.getFreeDragPosition()})
       .toPromise()
       .then(response => response.json())
       .catch(HomeComponent.error);
@@ -200,7 +178,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .catch(HomeComponent.error);
   }
   public async updateCalcCo(event: CdkDragEnd){
-    return await this.http.post('/api/coords/calc', {token: this.authService.getToken(), coords: this.dragPosition})
+    return await this.http.post('/api/coords/calc', {token: this.authService.getToken(), coords:event.source.getFreeDragPosition()})
       .toPromise()
       .then(response => response.json())
       .catch(HomeComponent.error);
@@ -212,7 +190,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .catch(HomeComponent.error);
   }
   public async updateAgendaCo(event: CdkDragEnd){
-    return await this.http.post('/api/coords/agenda', {token: this.authService.getToken(), coords: this.dragPosition})
+    return await this.http.post('/api/coords/agenda', {token: this.authService.getToken(), coords: event.source.getFreeDragPosition()})
       .toPromise()
       .then(response => response.json())
       .catch(HomeComponent.error);
@@ -223,5 +201,36 @@ export class HomeComponent implements OnInit, OnDestroy {
       .then(response => response.json())
       .catch(HomeComponent.error);
   }
+  public async getCalcVisibility(){
+    return await this.http.post('/api/visibility/calc', {token: this.authService.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(HomeComponent.error);
+  }
+  public async getClockVisibility(){
+    return await this.http.post('/api/visibility/clock', {token: this.authService.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(HomeComponent.error);
+  }
+  public async getCheckVisibility(){
+    return await this.http.post('/api/visibility/check', {token: this.authService.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(HomeComponent.error);
+  }
+  public async getAgendaVisibility(){
+    return await this.http.post('/api/visibility/agenda', {token: this.authService.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(HomeComponent.error);
+  }
+  public async getRepVisibility(){
+    return await this.http.post('/api/visibility/rep', {token: this.authService.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(HomeComponent.error);
+  }
+
 
 }
