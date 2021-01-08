@@ -9,14 +9,6 @@ var coordinatesSchema = new mongoose.Schema({
 mongoose.model('coordinatesSchema', coordinatesSchema,);
 
 var clockSchema = new mongoose.Schema({
-  fuseau : {
-    type : String,
-    default : 12
-  },
-  isShown : {
-    type : Boolean,
-    default : true
-  },
   coordinates : {type : coordinatesSchema}
 });
 mongoose.model('clockSchema', clockSchema,);
@@ -60,7 +52,12 @@ mongoose.model('notificationSchema',notificationSchema ,);
 
 var widgetListSchema = new mongoose.Schema({
 
-  clock : {type : clockSchema},
+  clock : {clock :{type : clockSchema},
+  isShown : {
+    type : Boolean,
+    default : true
+  }},
+  
 
   shortcuts :{
     list : [{shortcut : {type : shortcutSchema}, coordinates : {type : coordinatesSchema}}],
@@ -166,6 +163,7 @@ userSchema.methods.generateJwt = function() {
     _id: this._id,
     adress: this.adress,
     username: this.username,
+    isAdmin : this.isAdmin,
     exp: parseInt(expiry.getTime() / 1000),
   }, "coucouJeSuisLaClefSecreteMaisJeDevraisPasEtreDansLeCodeMaisJeSaisPAsOuAllerDoncJeVaisLa"); // DO NOT KEEP YOUR SECRET IN THE CODE!
 };
