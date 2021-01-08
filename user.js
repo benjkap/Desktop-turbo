@@ -117,7 +117,7 @@ let userSchema = new mongoose.Schema({
   } ,
   hash: String,
   salt: String,
-  isAdmin : Boolean,
+  isAdmin : {type: Boolean, default : false},
   widgetList : {type : widgetListSchema},
 
 
