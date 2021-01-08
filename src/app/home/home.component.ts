@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy, NgModule} from '@angular/core';
 import {AuthService} from '../service/auth/auth.service';
 import {Http} from '@angular/http';
-import {DragDropModule, CdkDragDrop, CdkDragEnd, CdkDragMove} from '@angular/cdk/drag-drop';
+import {CdkDragEnd, CdkDragMove} from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -11,11 +11,12 @@ import {DragDropModule, CdkDragDrop, CdkDragEnd, CdkDragMove} from '@angular/cdk
   providers: [AuthService]
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  dragPositionClock = {x: 0, y: 0};
-  dragPositionCheck = {x: 0, y: 0};
-  dragPositionCalc = {x: 0, y: 0};
-  dragPositionRep = {x: 0, y: 0};
-  dragPositionAgenda = {x: 0, y: 0};
+  dragPosition: {x: number, y: number};
+  dragPositionClock: {x: number, y: number};
+  dragPositionCheck: {x: number, y: number};
+  dragPositionCalc: {x: number, y: number};
+  dragPositionRep: {x: number, y: number};
+  dragPositionAgenda: {x: number, y: number};
   constructor(
     private http: Http,
     private authService: AuthService
@@ -24,7 +25,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   user = this.authService.getUserDetails();
   clock: any;
-
+  check: any;
+  rep: any;
+  agenda: any;
+  calculator: any;
   private static error(error: any) {
     const message = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
@@ -55,16 +59,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     return str.substr(0, 1).toUpperCase() + str.substr(1);
   }
   public gpsClockCo(event: CdkDragMove){
-    this.dragPositionClock = {x: event.pointerPosition.x, y: event.pointerPosition.y};
+    this.dragPosition = {x: event.pointerPosition.x, y: event.pointerPosition.y};
   }
   public updateClockCo(event: CdkDragEnd){
     console.log(this.dragPositionClock);
   }
-  public getclockCo(coordinates){
+  public getClockCo(coordinates){
     this.dragPositionClock = coordinates;
   }
   public gpsCheckCo(event: CdkDragMove){
-    this.dragPositionCheck = {x: event.pointerPosition.x, y: event.pointerPosition.y};
+    this.dragPosition = {x: event.pointerPosition.x, y: event.pointerPosition.y};
   }
   public updateCheckCo(event: CdkDragEnd){
     console.log(this.dragPositionCheck);
@@ -73,7 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.dragPositionCheck = coordinates;
   }
   public gpsRepCo(event: CdkDragMove){
-    this.dragPositionRep = {x: event.pointerPosition.x, y: event.pointerPosition.y};
+    this.dragPosition = {x: event.pointerPosition.x, y: event.pointerPosition.y};
   }
   public updateRepCo(event: CdkDragEnd){
     console.log(this.dragPositionRep);
@@ -82,7 +86,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.dragPositionRep = coordinates;
   }
   public gpsCalcCo(event: CdkDragMove){
-    this.dragPositionCalc = {x: event.pointerPosition.x, y: event.pointerPosition.y};
+    this.dragPosition = {x: event.pointerPosition.x, y: event.pointerPosition.y};
   }
   public updateCalcCo(event: CdkDragEnd){
     console.log(this.dragPositionCalc);
@@ -91,7 +95,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.dragPositionCalc = coordinates;
   }
   public gpsAgendaCo(event: CdkDragMove){
-    this.dragPositionAgenda = {x: event.pointerPosition.x, y: event.pointerPosition.y};
+    this.dragPosition = {x: event.pointerPosition.x, y: event.pointerPosition.y};
   }
   public updateAgendaCo(event: CdkDragEnd){
     console.log(this.dragPositionAgenda);

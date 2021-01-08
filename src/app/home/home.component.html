@@ -38,19 +38,19 @@
     <app-clock></app-clock>
   </div>
 
-  <div id="calculor" cdkDrag [cdkDragData]="clock"(cdkDragMoved)="gpsCalcCo($event)"(cdkDragEnded)="updateCalcCo($event)"[cdkDragFreeDragPosition]="dragPositionCalc">
+  <div id="calculor" cdkDrag [cdkDragData]="calculator"(cdkDragMoved)="gpsCalcCo($event)"(cdkDragEnded)="updateCalcCo($event)"[cdkDragFreeDragPosition]="dragPositionCalc">
     <ng-calculator></ng-calculator>
   </div>
 
-  <div id="check-list" class="jumbotron pt-2 pb-2 m-0" cdkDrag [cdkDragData]="clock"(cdkDragMoved)="gpsCheckCo($event)"(cdkDragEnded)="updateCheckCo($event)"[cdkDragFreeDragPosition]="dragPositionCheck">
+  <div id="check-list" class="jumbotron pt-2 pb-2 m-0" cdkDrag [cdkDragData]="check"(cdkDragMoved)="gpsCheckCo($event)"(cdkDragEnded)="updateCheckCo($event)"[cdkDragFreeDragPosition]="dragPositionCheck">
     <app-check-list></app-check-list>
   </div>
 
-  <div id="repertoire" class="jumbotron pt-2 pb-2 m-0" cdkDrag [cdkDragData]="clock"(cdkDragMoved)="gpsRepCo($event)"(cdkDragEnded)="updateRepCo($event)"[cdkDragFreeDragPosition]="dragPositionRep">
+  <div id="repertoire" class="jumbotron pt-2 pb-2 m-0" cdkDrag [cdkDragData]="rep"(cdkDragMoved)="gpsRepCo($event)"(cdkDragEnded)="updateRepCo($event)"[cdkDragFreeDragPosition]="dragPositionRep">
     <app-repertoire></app-repertoire>
   </div>
 
-  <div id="agenda" class="pt-5 mt-5" cdkDrag [cdkDragData]="clock"(cdkDragMoved)="gpsAgendaCo($event)"(cdkDragEnded)="updateAgendaCo($event)"[cdkDragFreeDragPosition]="dragPositionAgenda">
+  <div id="agenda" class="pt-5 mt-5" cdkDrag [cdkDragData]="agenda"(cdkDragMoved)="gpsAgendaCo($event)"(cdkDragEnded)="updateAgendaCo($event)"[cdkDragFreeDragPosition]="dragPositionAgenda">
 
     <app-agenda></app-agenda>
   </div>
