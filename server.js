@@ -24,6 +24,7 @@ let calendarSchema = mongoose.model('calendarSchema');
 let toDoListSchema = mongoose.model('toDoListSchema');
 let contactSchema = mongoose.model('contactSchema');
 let notificationSchema = mongoose.model('notificationSchema');
+let coordinatesSchema= mongoose.model('coordinatesSchema');
 let widgetlist = mongoose.model("widgetlist");
 let ObjectID = mongodb.ObjectID;
 // The database variable
@@ -539,7 +540,12 @@ app.post("/api/coords/clock", function (req, res) {
         console.log("unknown error");
         res.status(239).json('unknown');
       } else {
-        user.widgetList.clock.coordinates=coords;
+
+        let tmp = new coordinatesSchema();
+        tmp.xCoordinates =coords.x;
+        tmp.yCoordinates =coords.y;
+        let clock = new clockSchema(tmp);
+        user.widgetList.clock.clock=clock;
         user.save(function (err, user) {
           if (err) {
             console.error(err);

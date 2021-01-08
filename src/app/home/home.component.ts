@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.statusClass4 = 'not-active';
       this.statusClass5 = 'not-active';
       this.statusClass6 = 'not-active';
-    }  
+    }
   }
 
   statusClass2 = 'not-active';
