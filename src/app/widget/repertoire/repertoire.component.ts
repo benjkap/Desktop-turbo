@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Http} from '@angular/http';
+import {AuthService} from '../../service/auth/auth.service';
 
 @Component({
   selector: 'app-repertoire',
@@ -7,34 +9,74 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RepertoireComponent implements OnInit {
 
-  ajoutContact: boolean = false;
-  modificationActive: boolean = false;
-  newContact: {username: string, email: string, phoneNumber: string} = {username:"", email:"", phoneNumber:""};
-  //listContact à récupérer dans la database
-  listContact: {username: string, email: string, phoneNumber: string}[] = [{username:"michel", email:"michel@gmail.com", phoneNumber:"0312345678"}, {username:"michelline", email:"michelline@coucou.com", phoneNumber:"0318464567"}, {username:"hugo", email:"mouette@laposte.fr", phoneNumber:"0398765432"}];
+  data = {
+    list: [{
+      name: '',
+      Email: '',
+      phone: ''
+    }],
+    isShown: true
+  };
+
+  ajoutContact = false;
+  modificationActive = false;
+  newContact: { phone: string; Email: string; name: string };
+
+
+
+  constructor(
+    private http: Http,
+    private authService: AuthService
+  ) {}
+
+  private static error(error: any) {
+    const message = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(message);
+  }
+
+  public async getList() {
+    return await this.http.post('/api/contact', {token: this.authService.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(RepertoireComponent.error);
+  }
+
+  public async updateList(data) {
+    return await this.http.post('/api/contact', {token: this.authService.getToken(), data: data})
+      .toPromise()
+      .then(response => response.json())
+      .catch(RepertoireComponent.error);
+  }
 
   onAddContact() {
-    if (this.newContact.username != '' && (this.newContact.email != '' || this.newContact.phoneNumber != '')){
-      this.listContact.push(this.newContact);
-      this.newContact = {username:"", email:"", phoneNumber:""};
+    if (this.newContact.name !== '' && (this.newContact.Email !== '' || this.newContact.phone !== '')){
+      this.data.list.unshift(this.newContact);
+      this.newContact = {name: '', Email: '', phone: ''};
       this.ajoutContact = false;
+      this.updateList(this.data);
     }
   }
 
   modifierContact(k: number) {
     this.modificationActive = true;
-    this.newContact = {username: this.listContact[k].username, email: this.listContact[k].email, phoneNumber: this.listContact[k].phoneNumber};
+    this.newContact = {
+      name: this.data.list[k].name,
+      Email: this.data.list[k].Email,
+      phone: this.data.list[k].phone
+    };
     this.onDeleteContact(k);
     this.ajoutContact = true;
   }
 
   onDeleteContact(i: number) {
-    this.listContact.splice(i,1);
+    this.data.list.splice(i, 1);
+    this.updateList(this.data);
   }
 
-  constructor() { }
-
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.newContact = {name: '', Email: '', phone: ''};
+    this.data = await this.getList();
   }
 
 }

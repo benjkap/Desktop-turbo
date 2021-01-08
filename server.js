@@ -215,6 +215,50 @@ app.post("/api/check_list", function (req, res) {
   }
 });
 
+app.post("/api/contact", function (req, res) {
+
+  let token = req.body.token;
+  let data = req.body.data;
+  if (token === undefined) {
+    manageError(res, "Invalid product input", "token is mandatory.", 399);
+    return;
+  }
+  let userDetails;
+  userDetails = getUserDetails(token);
+  if (data === undefined) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(207).json('unknown');
+      } else {
+        console.log(userDetails.username + " ajouté à la collection.");
+        res.status(208).json(user.widgetList.contacts);
+      }
+    });
+  } else {
+    console.log("update de la check_list ", data);
+    //ici traitement pré requete
+    User.findOne({_id: userDetails._id}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(209).json('unknown');
+      } else {
+        user.setContact(data);
+        user.save(function (err, user) {
+          if (err) {
+            console.error(err);
+            res.status(210).json(false);
+          } else {
+            console.log(userDetails.username + " ajouté à la collection.");
+            res.status(211).json(true);
+          }
+        });
+
+      }
+    });
+  }
+});
+
 app.post("/api/profile/username", function (req, res) {
 
   let token = req.body.token;

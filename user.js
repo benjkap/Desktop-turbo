@@ -16,7 +16,7 @@ var clockSchema = new mongoose.Schema({
   isShown : {
     type : Boolean,
     default : true
-  }, 
+  },
   coordinates : {type : coordinatesSchema}
 });
 mongoose.model('clockSchema', clockSchema,);
@@ -141,6 +141,9 @@ userSchema.methods.validPassword = function(password) {
 };
 userSchema.methods.setCheck_list = function(list) {
   this.widgetList.toDoList=list;
+};
+userSchema.methods.setContact = function(list) {
+  this.widgetList.contacts=list;
 };
 userSchema.methods.setProfile = function(Profile) {
   this.widgetList.profile=Profile;

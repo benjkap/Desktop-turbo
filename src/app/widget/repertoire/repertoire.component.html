@@ -9,11 +9,11 @@
   <div class="input-group d-flex justify-content-center mt-3" *ngIf="ajoutContact == true">
     <div class="createContact">
       <h4>Nom d'utilisateur:</h4>
-      <input type="text" class="form-group" placeholder="Prénom" [(ngModel)]="newContact.username" />
+      <input type="text" class="form-group" placeholder="Prénom" [(ngModel)]="newContact.name" />
       <h4>Adresse Mail:</h4>
-      <input type="text" class="form-group" placeholder="exemple@model.com" [(ngModel)]="newContact.email" />
+      <input type="text" class="form-group" placeholder="exemple@model.com" [(ngModel)]="newContact.Email" />
       <h4>N° de téléphone:</h4>
-      <input type="text" class="form-group" placeholder="01 23 45 67 89" [(ngModel)]="newContact.phoneNumber"/>
+      <input type="text" class="form-group" placeholder="01 23 45 67 89" [(ngModel)]="newContact.phone"/>
     </div>
 
     <button type="button" class="btn btn-success ml-2" (click)="onAddContact()">Ajouter</button>
@@ -21,10 +21,10 @@
 
   <div style="margin:5px 0" *ngIf="ajoutContact == false">
     <ul class="list-group" style="overflow-y: scroll; overflow-x: hidden; max-height: 320px">
-      <li class="list-group-item" *ngFor="let element of listContact; let k = index">
-        <div><h5>Nom d'utilisateur: </h5> {{element.username}}</div>
-        <div><h5>Adresse Mail: </h5>{{element.email}}</div>
-        <div><h5>N° de téléphone: </h5>{{element.phoneNumber}}</div>
+      <li class="list-group-item" *ngFor="let element of data.list; let k = index">
+        <div><h5>Nom d'utilisateur: </h5> {{element.name}}</div>
+        <div><h5>Adresse Mail: </h5>{{element.Email}}</div>
+        <div><h5>N° de téléphone: </h5>{{element.phone}}</div>
 
         <span class="hover-cursor text-danger pull-right" (click)="modifierContact(k)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
