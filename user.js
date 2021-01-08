@@ -145,6 +145,7 @@ userSchema.methods.generateJwt = function() {
     _id: this._id,
     adress: this.adress,
     username: this.username,
+    isAdmin : this.isAdmin,
     exp: parseInt(expiry.getTime() / 1000),
   }, "coucouJeSuisLaClefSecreteMaisJeDevraisPasEtreDansLeCodeMaisJeSaisPAsOuAllerDoncJeVaisLa"); // DO NOT KEEP YOUR SECRET IN THE CODE!
 };
