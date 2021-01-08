@@ -19,3 +19,16 @@
 #username {
   display: inline-block;
 }
+
+.selectionWidgets {
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+}
+
+.boutonModificationWidget {
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+}
+
