@@ -1,23 +1,17 @@
-import {Component, OnInit, OnChanges} from '@angular/core';
+import {Component, OnInit, OnChanges, ElementRef} from '@angular/core';
 import {AuthService} from '../../service/auth/auth.service';
 import {Http} from '@angular/http';
-import * as mongoose from 'mongoose';
 
-const toDoListSchema = new mongoose.Schema({
-  Array: [{name: String,
-    subString: [{
-      name: String,
-      valid : Boolean
-    }]}]
-});
-
+interface Position {
+  left: number;
+  top: number;
+}
 @Component({
   selector: 'app-check-list',
   templateUrl: './check-list.component.html',
   styleUrls: ['./check-list.component.scss']
 })
 export class CheckListComponent implements OnInit, OnChanges {
-
   menuCheckList = true;
   newElement = '';
   data = {
@@ -27,6 +21,7 @@ export class CheckListComponent implements OnInit, OnChanges {
   numEltCheckList = 0;
 
   constructor(private http: Http, private authService: AuthService) {
+
   }
 
   private static error(error: any) {
@@ -43,7 +38,7 @@ export class CheckListComponent implements OnInit, OnChanges {
   }
 
   public async updateList(data) {
-    return await this.http.post('/api/check_list', {token: this.authService.getToken(), data: data})
+    return await this.http.post('/api/check_list', {token: this.authService.getToken(), data})
       .toPromise()
       .then(response => response.json())
       .catch(CheckListComponent.error);
@@ -53,15 +48,11 @@ export class CheckListComponent implements OnInit, OnChanges {
     return this.data.category[id].subString;
   }
 
-  public getCatName(id) {
-    return this.data.category[id].name;
-  }
-
   changeCheckList(j: number) {
     this.numEltCheckList = j;
     this.menuCheckList = false;
     // il faut modifier la toDoList pour changer les éléments
-    // this.toDoList = this.listCheckList[j];
+
   }
 
   // ajout tache
@@ -111,6 +102,8 @@ export class CheckListComponent implements OnInit, OnChanges {
 
   async ngOnInit(): Promise<void> {
     this.data = await this.getList();
+  }
+  getCoordinates(): any{
   }
 
   ngOnChanges(): any {
