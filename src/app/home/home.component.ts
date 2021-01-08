@@ -64,6 +64,7 @@ export class HomeComponent implements OnInit {
   setActiveClass3(){
     if(this.statusClass3 == 'not-active'){
       this.statusClass3 = 'active';
+      this.statusClass1 = 'not-active';
       this.statusClass4 = 'not-active';
       this.statusClass2 = 'not-active';
       this.statusClass5 = 'not-active';
