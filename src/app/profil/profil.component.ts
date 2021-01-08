@@ -105,7 +105,6 @@ export class ProfilComponent implements OnInit, OnChanges{
     await this.authService.updateToken();
     this.user = this.authService.getUserDetails();
   }
-
   public logout() {
     this.authService.logout();
   }
@@ -118,5 +117,6 @@ export class ProfilComponent implements OnInit, OnChanges{
 
   ngOnChanges() {
   }
+
 
 }

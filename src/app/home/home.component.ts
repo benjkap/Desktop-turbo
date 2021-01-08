@@ -29,6 +29,26 @@ export class HomeComponent implements OnInit, OnDestroy {
   rep: any;
   agenda: any;
   calculator: any;
+  dataClock: {
+    x: 0;
+    y: 0;
+  };
+  dataCheck: {
+    x: 0;
+    y: 0;
+  };
+  dataAgenda: {
+    x: 0;
+    y: 0;
+  };
+  dataRep: {
+    x: 0;
+    y: 0;
+  };
+  dataCalculator: {
+    x: 0;
+    y: 0;
+  };
   private static error(error: any) {
     const message = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
@@ -61,47 +81,77 @@ export class HomeComponent implements OnInit, OnDestroy {
   public gpsClockCo(event: CdkDragMove){
     this.dragPosition = {x: event.pointerPosition.x, y: event.pointerPosition.y};
   }
-  public updateClockCo(event: CdkDragEnd){
-    console.log(this.dragPositionClock);
+  public async updateClockCo(event: CdkDragEnd){
+    return await this.http.post('/api/coords/clock', {token: this.authService.getToken(), coords: this.dragPositionClock})
+      .toPromise()
+      .then(response => response.json())
+      .catch(HomeComponent.error);
   }
-  public getClockCo(coordinates){
-    this.dragPositionClock = coordinates;
+  public async getClockCo(coordinates){
+    return await this.http.post('/api/coords/clock', {token: this.authService.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(HomeComponent.error);
   }
   public gpsCheckCo(event: CdkDragMove){
     this.dragPosition = {x: event.pointerPosition.x, y: event.pointerPosition.y};
   }
-  public updateCheckCo(event: CdkDragEnd){
-    console.log(this.dragPositionCheck);
+  public async updateCheckCo(event: CdkDragEnd){
+    return await this.http.post('/api/coords/check', {token: this.authService.getToken(), coords: this.dragPositionCheck})
+      .toPromise()
+      .then(response => response.json())
+      .catch(HomeComponent.error);
   }
-  public getCheckCo(coordinates){
-    this.dragPositionCheck = coordinates;
+  public async getCheckCo(coordinates){
+    return await this.http.post('/api/coords/check', {token: this.authService.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(HomeComponent.error);
   }
   public gpsRepCo(event: CdkDragMove){
     this.dragPosition = {x: event.pointerPosition.x, y: event.pointerPosition.y};
   }
-  public updateRepCo(event: CdkDragEnd){
-    console.log(this.dragPositionRep);
+  public async updateRepCo(event: CdkDragEnd){
+    return await this.http.post('/api/coords/rep', {token: this.authService.getToken(), coords: this.dragPositionRep})
+      .toPromise()
+      .then(response => response.json())
+      .catch(HomeComponent.error);
   }
-  public getRepCo(coordinates){
-    this.dragPositionRep = coordinates;
+  public async getRepCo(coordinates){
+    return await this.http.post('/api/coords/rep', {token: this.authService.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(HomeComponent.error);
   }
   public gpsCalcCo(event: CdkDragMove){
     this.dragPosition = {x: event.pointerPosition.x, y: event.pointerPosition.y};
   }
-  public updateCalcCo(event: CdkDragEnd){
-    console.log(this.dragPositionCalc);
+  public async updateCalcCo(event: CdkDragEnd){
+    return await this.http.post('/api/coords/calc', {token: this.authService.getToken(), coords: this.dragPositionCalc})
+      .toPromise()
+      .then(response => response.json())
+      .catch(HomeComponent.error);
   }
-  public getCalcCo(coordinates){
-    this.dragPositionCalc = coordinates;
+  public async getCalcCo(coordinates){
+    return await this.http.post('/api/coords/calc', {token: this.authService.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(HomeComponent.error);
   }
   public gpsAgendaCo(event: CdkDragMove){
     this.dragPosition = {x: event.pointerPosition.x, y: event.pointerPosition.y};
   }
-  public updateAgendaCo(event: CdkDragEnd){
-    console.log(this.dragPositionAgenda);
+  public async updateAgendaCo(event: CdkDragEnd){
+    return await this.http.post('/api/coords/agenda', {token: this.authService.getToken(), coords: this.dragPositionAgenda})
+      .toPromise()
+      .then(response => response.json())
+      .catch(HomeComponent.error);
   }
-  public getAgendaCo(coordinates){
-    this.dragPositionAgenda = coordinates;
+  public async getAgendaCo(coordinates){
+    return await this.http.post('/api/coords/agenda', {token: this.authService.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(HomeComponent.error);
   }
 
 }

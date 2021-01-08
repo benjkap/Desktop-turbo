@@ -76,7 +76,7 @@ app.post("/api/token", function (req, res) {
 
   let token = req.body.token;
   if(token === undefined){
-    manageError(res, "Invalid product input", "token is mandatory.", 402);
+    manageError(res, "Invalid product input", "token is mandatory.", 517);
   } else{
     let userDetails;
     userDetails = getUserDetails(token);
@@ -90,7 +90,7 @@ app.post("/api/token", function (req, res) {
       } else {
         console.log('ça marche');
         let token = user.generateJwt();
-        res.status(260).json(token);
+        res.status(199).json(token);
       }
     });
 
@@ -105,9 +105,9 @@ app.post("/api/login", function (req, res) {
   console.log('tentative de connection, user: ' + login.username);
 
   if (!login.username) {
-    manageError(res, "Invalid product input", "Name is mandatory.", 395);
+    manageError(res, "Invalid product input", "Name is mandatory.", 516);
   } else if (!login.password) {
-    manageError(res, "Invalid product input", "Brand is mandatory.", 396);
+    manageError(res, "Invalid product input", "Brand is mandatory.", 515);
   } else {
 
     User.findOne({username: login.username}, function (err, user) {
@@ -146,9 +146,9 @@ app.post("/api/register", function (req, res) {
   console.log("tentative d'inscription, user: " + register.username);
 
   if (!register.username) {
-    manageError(res, "Invalid input", "Name is mandatory.", 397);
+    manageError(res, "Invalid input", "Name is mandatory.", 514);
   } else if (!register.password) {
-    manageError(res, "Invalid input", "password is mandatory.", 398);
+    manageError(res, "Invalid input", "password is mandatory.", 513);
   } else {
 
     //ici traitement pré requete
@@ -176,7 +176,7 @@ app.post("/api/check_list", function (req, res) {
   let token = req.body.token;
   let data = req.body.data;
   if (token === undefined) {
-    manageError(res, "Invalid product input", "token is mandatory.", 399);
+    manageError(res, "Invalid product input", "token is mandatory.", 512);
     return;
   }
   let userDetails;
@@ -220,7 +220,7 @@ app.post("/api/contact", function (req, res) {
   let token = req.body.token;
   let data = req.body.data;
   if (token === undefined) {
-    manageError(res, "Invalid product input", "token is mandatory.", 399);
+    manageError(res, "Invalid product input", "token is mandatory.", 511);
     return;
   }
   let userDetails;
@@ -264,7 +264,7 @@ app.post("/api/profile/username", function (req, res) {
   let token = req.body.token;
   let data = req.body.data;
   if (token === undefined) {
-    manageError(res, "Invalid product input", "Name is mandatory.", 400);
+    manageError(res, "Invalid product input", "Name is mandatory.", 510);
     return;
   }
   let userDetails;
@@ -311,7 +311,7 @@ app.post("/api/profile/address", function (req, res) {
   let token = req.body.token;
   let data = req.body.data;
   if (token === undefined) {
-    manageError(res, "Invalid product input", "Name is mandatory.", 400);
+    manageError(res, "Invalid product input", "Name is mandatory.", 509);
     return;
   }
   let userDetails;
@@ -352,7 +352,7 @@ app.post("/api/profile/background", function (req, res) {
   let token = req.body.token;
   let data = req.body.data;
   if (token === undefined) {
-    manageError(res, "Invalid product input", "Name is mandatory.", 400);
+    manageError(res, "Invalid product input", "Name is mandatory.", 508);
     return;
   }
   let userDetails;
@@ -392,7 +392,7 @@ app.post("/api/clock", function (req, res) {
   let token = req.body.token;
   let data = req.body.data;
   if (token === undefined) {
-    manageError(res, "Invalid product input", "token is mandatory.", 401);
+    manageError(res, "Invalid product input", "token is mandatory.", 507);
     return;
   }
   let userDetails;
@@ -434,7 +434,7 @@ app.post("/api/agenda", function (req, res) {
   let token = req.body.token;
   let data = req.body.data;
   if (token === undefined) {
-    manageError(res, "Invalid product input", "token is mandatory.", 402);
+    manageError(res, "Invalid product input", "token is mandatory.", 506);
     return;
   }
   let userDetails;
@@ -470,9 +470,214 @@ app.post("/api/agenda", function (req, res) {
     });
   }
 });
+app.post("/api/coords/clock", function (req, res) {
+
+  let token = req.body.token;
+  let coords = req.body.coords;
+  if (token === undefined) {
+    manageError(res, "Invalid product input", "token is mandatory.", 505);
+    return;
+  }
+  let userDetails;
+  userDetails = getUserDetails(token);
+  if (coords === undefined) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(237).json('unknown');
+      } else {
+        res.status(238).json(user.widgetList.clock.coordinates);
+      }
+    });
+  } else {
+    //ici traitement pré requete
+    User.findOne({_id: userDetails._id}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(239).json('unknown');
+      } else {
+        user.widgetList.clock.coordinates=coords;
+        user.save(function (err, user) {
+          if (err) {
+            console.error(err);
+            res.status(240).json(false);
+          } else {
+            console.log(userDetails.username + " a été update");
+            res.status(241).json(true);
+          }
+        });
+
+      }
+    });
+  }
+});
+app.post("/api/coords/check", function (req, res) {
+
+  let token = req.body.token;
+  let coords = req.body.coords;
+  if (token === undefined) {
+    manageError(res, "Invalid product input", "token is mandatory.", 504);
+    return;
+  }
+  let userDetails;
+  userDetails = getUserDetails(token);
+  if (coords === undefined) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(242).json('unknown');
+      } else {
+        res.status(243).json(user.widgetList.toDoList.coordinates);
+      }
+    });
+  } else {
+    //ici traitement pré requete
+    User.findOne({_id: userDetails._id}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(244).json('unknown');
+      } else {
+        user.widgetList.toDoList.coordinates=coords;
+        user.save(function (err, user) {
+          if (err) {
+            console.error(err);
+            res.status(245).json(false);
+          } else {
+            console.log(userDetails.username + " a été update");
+            res.status(246).json(true);
+          }
+        });
+
+      }
+    });
+  }
+});
+app.post("/api/coords/calc", function (req, res) {
+
+  let token = req.body.token;
+  let coords = req.body.coords;
+  if (token === undefined) {
+    manageError(res, "Invalid product input", "token is mandatory.", 503);
+    return;
+  }
+  let userDetails;
+  userDetails = getUserDetails(token);
+  if (coords === undefined) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(247).json('unknown');
+      } else {
+        res.status(248).json(user.widgetList.calculator.coordinates);
+      }
+    });
+  } else {
+    //ici traitement pré requete
+    User.findOne({_id: userDetails._id}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(249).json('unknown');
+      } else {
+        user.widgetList.calculator.coordinates=coords;
+        user.save(function (err, user) {
+          if (err) {
+            console.error(err);
+            res.status(250).json(false);
+          } else {
+            console.log(userDetails.username + " a été update");
+            res.status(251).json(true);
+          }
+        });
+
+      }
+    });
+  }
+});
+app.post("/api/coords/rep", function (req, res) {
+
+  let token = req.body.token;
+  let coords = req.body.coords;
+  if (token === undefined) {
+    manageError(res, "Invalid product input", "token is mandatory.", 502);
+    return;
+  }
+  let userDetails;
+  userDetails = getUserDetails(token);
+  if (coords === undefined) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(252).json('unknown');
+      } else {
+        res.status(253).json(user.widgetList.contacts.coordinates);
+      }
+    });
+  } else {
+    //ici traitement pré requete
+    User.findOne({_id: userDetails._id}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(254).json('unknown');
+      } else {
+        user.widgetList.contacts.coordinates=coords;
+        user.save(function (err, user) {
+          if (err) {
+            console.error(err);
+            res.status(255).json(false);
+          } else {
+            console.log(userDetails.username + " a été update");
+            res.status(256).json(true);
+          }
+        });
+
+      }
+    });
+  }
+});
+app.post("/api/coords/agenda", function (req, res) {
+
+  let token = req.body.token;
+  let coords = req.body.coords;
+  if (token === undefined) {
+    manageError(res, "Invalid product input", "token is mandatory.", 501);
+    return;
+  }
+  let userDetails;
+  userDetails = getUserDetails(token);
+  if (coords === undefined) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(257).json('unknown');
+      } else {
+        res.status(258).json(user.widgetList.calendar.coordinates);
+      }
+    });
+  } else {
+    //ici traitement pré requete
+    User.findOne({_id: userDetails._id}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(259).json('unknown');
+      } else {
+        user.widgetList.calendar.coordinates=coords;
+        user.save(function (err, user) {
+          if (err) {
+            console.error(err);
+            res.status(260).json(false);
+          } else {
+            console.log(userDetails.username + " a été update");
+            res.status(261).json(true);
+          }
+        });
+
+      }
+    });
+  }
+});
 app.delete("/api/login/:id", function (req, res) {
   if (req.params.id.length > 24 || req.params.id.length < 24) {
-    manageError(res, "Invalid product id", "ID must be a single String of 12 bytes or a string of 24 hex characters.", 403);
+    manageError(res, "Invalid product id", "ID must be a single String of 12 bytes or a string of 24 hex characters.", 500);
   } else {
     database.collection(USERS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function (err, result) {
       if (err) {
