@@ -36,10 +36,14 @@ export class HomeComponent implements OnInit {
       this.statusClass2 = 'not-active';
       this.statusClass3 = 'not-active';
       this.statusClass4 = 'not-active';
+      this.statusClass5 = 'not-active';
+      this.statusClass6 = 'not-active';
+      this.statusClass7 = 'not-active';
+      this.statusClass8 = 'not-active';
     }
-    else{
+    /*else{
       this.statusClass1 = 'not-active';
-    }
+    }*/
     
   }
   statusClass2 = 'not-active';
@@ -50,10 +54,14 @@ export class HomeComponent implements OnInit {
       this.statusClass1 = 'not-active';
       this.statusClass3 = 'not-active';
       this.statusClass4 = 'not-active';
+      this.statusClass5 = 'not-active';
+      this.statusClass6 = 'not-active';
+      this.statusClass7 = 'not-active';
+      this.statusClass8 = 'not-active';
     }
-    else{
+    /*else{
       this.statusClass2 = 'not-active';
-    }
+    }*/
     
   }
 
@@ -64,10 +72,14 @@ export class HomeComponent implements OnInit {
       this.statusClass3 = 'active';
       this.statusClass4 = 'not-active';
       this.statusClass2 = 'not-active';
+      this.statusClass5 = 'not-active';
+      this.statusClass6 = 'not-active';
+      this.statusClass7 = 'not-active';
+      this.statusClass8 = 'not-active';
     }
-    else{
+    /*else{
       this.statusClass3 = 'not-active';
-    }
+    }*/
     
   }
   statusClass4 = 'not-active';
@@ -78,10 +90,87 @@ export class HomeComponent implements OnInit {
       this.statusClass3 = 'not-active';
       this.statusClass2 = 'not-active';
       this.statusClass1 = 'not-active';
+      this.statusClass5 = 'not-active';
+      this.statusClass6 = 'not-active';
+      this.statusClass7 = 'not-active';
+      this.statusClass8 = 'not-active';
     }
-    else{
+    /*else{
       this.statusClass4 = 'not-active';
-    }
+    }*/
     
   }
+  statusClass5 = 'not-active';
+
+  setActiveClass5(){
+    if(this.statusClass5 == 'not-active'){
+      this.statusClass5 = 'active';
+      this.statusClass6 = 'not-active';
+      this.statusClass7 = 'not-active';
+      this.statusClass8 = 'not-active';
+      this.statusClass1 = 'not-active';
+      this.statusClass2 = 'not-active';
+      this.statusClass3 = 'not-active';
+      this.statusClass4 = 'not-active';
+    }
+    /*else{
+      this.statusClass5 = 'not-active';
+    }*/
+    
+  }
+  statusClass6 = 'not-active';
+
+  setActiveClass6(){
+    if(this.statusClass6 == 'not-active'){
+      this.statusClass6 = 'active';
+      this.statusClass5 = 'not-active';
+      this.statusClass7 = 'not-active';
+      this.statusClass8 = 'not-active';
+      this.statusClass1 = 'not-active';
+      this.statusClass2 = 'not-active';
+      this.statusClass3 = 'not-active';
+      this.statusClass4 = 'not-active';
+    }
+    /*else{
+      this.statusClass6 = 'not-active';
+    }*/
+    
+  }
+
+  statusClass7 = 'not-active';
+
+  setActiveClass7(){
+    if(this.statusClass7 == 'not-active'){
+      this.statusClass7 = 'active';
+      this.statusClass8 = 'not-active';
+      this.statusClass6 = 'not-active';
+      this.statusClass1 = 'not-active';
+      this.statusClass2 = 'not-active';
+      this.statusClass3 = 'not-active';
+      this.statusClass4 = 'not-active';
+    }
+    //else{
+      //this.statusClass7 = 'not-active';
+    //}
+    
+  }
+  statusClass8 = 'not-active';
+
+  setActiveClass8(){
+    if(this.statusClass8 == 'not-active'){
+      this.statusClass8 = 'active';
+      this.statusClass7 = 'not-active';
+      this.statusClass6 = 'not-active';
+      this.statusClass5 = 'not-active';
+      this.statusClass1 = 'not-active';
+      this.statusClass2 = 'not-active';
+      this.statusClass3 = 'not-active';
+      this.statusClass4 = 'not-active';
+    }
+    /*else{
+      this.statusClass8 = 'not-active';
+    }*/
+    
+  }
+
 }
