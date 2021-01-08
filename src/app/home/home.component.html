@@ -34,11 +34,11 @@
   </script>
   
 
-<div id="clock" cdkDrag>
+<div id="clock" [ngClass]="statusClass2" (click)="setActiveClass2()" cdkDrag>
   <cs-canvas-clock></cs-canvas-clock>
 </div>
 
-<div id="calculor" cdkDrag>
+<div id="calculor" [ngClass]="statusClass1" (click)="setActiveClass1()" cdkDrag>
   <ng-calculator></ng-calculator>
 </div>
 
@@ -46,11 +46,11 @@
   <app-check-list></app-check-list>
 </div>
 
-<div id="repertoire" class="jumbotron pt-2 pb-2 m-0" cdkDrag>
+<div id="repertoire" class="jumbotron pt-2 pb-2 m-0" [ngClass]="statusClass4" (click)="setActiveClass4()" cdkDrag>
   <app-repertoire></app-repertoire>
 </div>
 
-<div id="agenda" class="pt-5 mt-5" cdkDrag>
+<div id="agenda" class="pt-5 mt-5" [ngClass]="statusClass3" (click)="setActiveClass3()" cdkDrag>
 
   <app-agenda></app-agenda>
 </div>
