@@ -1,6 +1,5 @@
 import { Component, OnInit, ElementRef, ViewEncapsulation } from '@angular/core';
 import { extend, loadCldr, setCulture, Internationalization, L10n } from '@syncfusion/ej2-base';
-//import { EventSettingsModel, WeekService } from '@syncfusion/ej2-angular-schedule';
 import {EventSettingsModel, DayService, WeekService, WorkWeekService, MonthService,AgendaService, ScheduleComponent, View,ResizeService, DragAndDropService} from '@syncfusion/ej2-angular-schedule';
 setCulture('fr');
 
