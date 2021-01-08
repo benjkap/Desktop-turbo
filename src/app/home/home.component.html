@@ -36,7 +36,7 @@
   <ng-calculator></ng-calculator>
 </div>
 
-<div id="check-list" class="jumbotron pt-2 pb-2 m-0" (click)="setActiveClass5()" (cdkDragStarted)="setActiveClass5()" cdkDrag>
+<div id="check-list" class="jumbotron pt-2 pb-2 m-0" [ngClass]="statusClass5" (click)="setActiveClass5()" (cdkDragStarted)="setActiveClass5()" cdkDrag>
   <app-check-list></app-check-list>
 </div>
 
@@ -50,4 +50,6 @@
 
 
   <app-note></app-note>
+
+
 
