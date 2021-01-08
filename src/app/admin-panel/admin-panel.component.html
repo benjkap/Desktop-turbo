@@ -11,16 +11,21 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let utilisateur of listeUtilisateurs; let m = index">
-          <th scope="row">{{utilisateur.userID}}</th>
+        <tr *ngFor="let utilisateur of data; let m = index">
+          <th scope="row">{{utilisateur._id}}</th>
           <td>{{utilisateur.username}}</td>
-          <td>{{utilisateur.email}}</td>
+          <td>{{utilisateur.adress}}</td>
           <td>
-            <select class="btn btn-secondary dropdown-toggle" name="widgets" (change)="selectWidget(m, $event)">
-              <option *ngFor="let widget of utilisateur.widgets; let n = index" [value]="n">{{widget.nom}}</option>
+            <select class="btn btn-secondary dropdown-toggle" name="widgets" (change)="selectWidget($event)">
+              <option value="clock" >Clock</option>
+              <option value="calculator" >Calculatrice</option>
+              <option value="calendar" >Calendrier</option>
+              <option value="contacts" >Contact</option>
+              <option value="notepad" >Note</option>
+              <option value="toDoListe" >To Do Liste</option>
             </select>
-            <button type="button" class="btn btn-success" *ngIf="utilisateur.widgets[widgetSelection[m]].activation" (click)="utilisateur.widgets[widgetSelection[m]].activation = false">On</button>
-            <button type="button" class="btn btn-danger" *ngIf="!utilisateur.widgets[widgetSelection[m]].activation" (click)="utilisateur.widgets[widgetSelection[m]].activation = true">Off</button>
+              <button type="button" class="btn btn-success" *ngIf="utilisateur.widgetList[widgetSelection].isShown" (click)="displayWidget(utilisateur.widgetList[widgetSelection], false)">On</button>
+              <button type="button" class="btn btn-danger" *ngIf="!utilisateur.widgetList[widgetSelection].isShown" (click)="displayWidget(utilisateur.widgetList[widgetSelection], true)">Off</button>
           </td>
           <td><button type="button" class="btn btn-warning" (click)="resetAccount(utilisateur)">Reset</button></td>
           <td><button type="button" class="btn btn-danger" (click)="deleteAccount(utilisateur)">Supprimer</button></td>
@@ -28,5 +33,4 @@
       </tbody>
     </table>
   </div>
-  
-  
+

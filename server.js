@@ -718,6 +718,57 @@ app.post("/api/coords/agenda", function (req, res) {
     });
   }
 });
+
+app.post("/api/admin", function (req, res) {
+
+  let token = req.body.token;
+  let data = req.body.data;
+  if (token === undefined) {
+    manageError(res, "Invalid product input", "token is mandatory.", 502);
+    return;
+  }
+  let userDetails;
+  userDetails = getUserDetails(token);
+  if (data === undefined) {
+    User.find({}, function (err, users) {
+      if (err) {
+        console.log("unknown error");
+        res.status(252).json('unknown');
+      } else {
+        res.status(253).json(users);
+      }
+    });
+  } else {
+    //ici traitement pré requete
+    User.find({}, function (err, users) {
+      if (err) {
+        console.log("unknown error");
+        res.status(254).json('unknown');
+      } else {
+
+        let i = 0;
+        for (let userData of data) {
+          users[i].widgetList = userData.widgetList;
+          i++;
+        }
+
+        console.log(users[0].widgetList.clock);
+        for (let user of users) {
+          user.save(function (err, user) {
+            if (err) {
+              console.error(err);
+              res.status(255).json(false);
+            } else {
+              console.log(user.username + " a été update");
+            }
+          });
+        }
+        res.status(256).json(true);
+      }
+    });
+  }
+});
+
 app.delete("/api/login/:id", function (req, res) {
   if (req.params.id.length > 24 || req.params.id.length < 24) {
     manageError(res, "Invalid product id", "ID must be a single String of 12 bytes or a string of 24 hex characters.", 500);

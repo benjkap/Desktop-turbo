@@ -38,7 +38,7 @@ export class CheckListComponent implements OnInit, OnChanges {
   }
 
   public async updateList(data) {
-    return await this.http.post('/api/check_list', {token: this.authService.getToken(), data})
+    return await this.http.post('/api/check_list', {token: this.authService.getToken(), data: data})
       .toPromise()
       .then(response => response.json())
       .catch(CheckListComponent.error);
