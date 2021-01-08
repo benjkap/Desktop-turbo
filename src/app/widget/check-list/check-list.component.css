@@ -1,0 +1,18 @@
+.checkList {
+    text-align: center;
+}
+.test {
+    overflow: auto;
+}
+
+.barMenuFirstPart {
+  position: relative;
+}
+
+.barMenuSecondPart {
+  position: relative;
+}
+
+.barMenu {
+  display: inline-flex;
+}

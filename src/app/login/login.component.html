@@ -1,0 +1,32 @@
+<div class="col-md-3 col-md-offset-3 mx-auto text-center mt-5">
+  <div class="login-wrapper">
+    <img class="w-50"
+         src="../../assets/desktop.png"
+         alt="..."/>
+    <h2 class="mb-4">Page de connexion</h2>
+    <form name="formLogin" (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
+      <div class="form-group mt-3">
+        <label for="username">Identifiant</label>
+        <input [ngClass]="{'is-invalid': this.error.username}"
+               type="text" class="form-control" name="username" id="username" [(ngModel)]="this.usernameData"
+               placeholder='Saisissez votre identifiant' required ngModel/>
+      </div>
+      <div class="form-group mt-3">
+        <label for="password">Mot de passe</label>
+        <input [ngClass]="{'is-invalid': this.error.password}"
+               type="password" class="form-control" name="password" id="password"
+               placeholder='Saisissez votre mot de passe' required ngModel/>
+      </div>
+      <div class="checkbox mt-3"><label class="m-0"><input name="remember" type="checkbox" [(ngModel)]="this.isCheck" ngModel> Se souvenir de moi </label>
+      </div>
+      <div class="form-group mt-3">
+        <button class="btn btn-primary mt-2  btn-block" [disabled]="!f.form.valid">Connexion</button>
+      </div>
+    </form>
+    <div routerLinkActive="active">
+      <a routerLink="/register">S'inscrire</a>
+    </div>
+  </div>
+</div>
+
+

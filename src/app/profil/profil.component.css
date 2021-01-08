@@ -1,0 +1,34 @@
+.profil {
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+  }
+
+.crayonModif {
+  width: 3vw;
+  height: 3vh;
+  margin-left: 47.5vw;
+}
+
+#profilButton {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+#username {
+  display: inline-block;
+}
+
+.selectionWidgets {
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+}
+
+.boutonModificationWidget {
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+}
+

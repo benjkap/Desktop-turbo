@@ -1,0 +1,64 @@
+<div class="text-center">
+  <div class="btn-group" id="profilButton">
+    <button class="btn btn-primary first" title="Profil">
+      <div id="username" class="text-center font-weight-bolder pl-3 pr-4">{{ ucFirst(user.username) }}</div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-person mx-auto mb-1" viewBox="0 0 16 16">
+        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+      </svg>
+    </button>
+
+    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split second" id="dropdownMenuReference" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent" data-offset="-10,0">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+      <a id="profile" class="dropdown-item" [routerLink]="['/profil']">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person mx-auto mb-1" viewBox="0 0 16 16">
+          <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+        </svg>
+        Profil</a>
+      <a id="admin" *ngIf="user.isAdmin" class="dropdown-item" [routerLink]="['/admin']">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key  mx-auto mb-1" viewBox="0 0 16 16">
+          <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"/>
+          <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+        </svg>
+        Admin</a>
+      <a id="disconnect" class="dropdown-item" (click)="logout()" >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left mx-auto mb-1" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+          <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+        </svg>
+        Déconnexion</a>
+    </div>
+  </div>
+
+</div>
+<script>
+  function dragstart_handler(ev) {
+   // On ajoute l'identifiant de l'élément cible à l'objet de transfert
+   ev.dataTransfer.setData("text/plain", ev.target.innerText);
+  }
+  </script>
+
+  <div id="clock"  [ngClass]="statusClass2" (click)="setActiveClass2()" (cdkDragStarted)="setActiveClass2()" cdkDrag [cdkDragData]="clock" (cdkDragEnded)="updateClockCo($event)" [cdkDragFreeDragPosition]="dragPositionClock"*ngIf="clockVisibility">
+    <app-clock></app-clock>
+  </div>
+
+  <div id="calculor"  [ngClass]="statusClass1" (click)="setActiveClass1()" (cdkDragStarted)="setActiveClass1()" cdkDrag [cdkDragData]="calculator"(cdkDragEnded)="updateCalcCo($event)"[cdkDragFreeDragPosition]="dragPositionCalc"*ngIf="calcVisibility">
+    <ng-calculator></ng-calculator>
+  </div>
+
+  <div id="check-list" class="jumbotron pt-2 pb-2 m-0" [ngClass]="statusClass5" (click)="setActiveClass5()" (cdkDragStarted)="setActiveClass5()" cdkDrag [cdkDragData]="check"(cdkDragEnded)="updateCheckCo($event)"[cdkDragFreeDragPosition]="dragPositionCheck"*ngIf="checkVisibility">
+    <app-check-list></app-check-list>
+  </div>
+
+  <div id="repertoire" [ngClass]="statusClass4" (click)="setActiveClass4()" (cdkDragStarted)="setActiveClass4()" class="jumbotron pt-2 pb-2 m-0" cdkDrag [cdkDragData]="rep"(cdkDragEnded)="updateRepCo($event)"[cdkDragFreeDragPosition]="dragPositionRep"*ngIf="repVisibility">
+    <app-repertoire></app-repertoire>
+  </div>
+
+  <div id="agenda" class="pt-5 mt-5"  [ngClass]="statusClass3" (click)="setActiveClass3()" (cdkDragStarted)="setActiveClass3()" cdkDrag [cdkDragData]="agenda"(cdkDragEnded)="updateAgendaCo($event)"[cdkDragFreeDragPosition]="dragPositionAgenda"*ngIf="agendaVisibility">
+  <app-agenda></app-agenda>
+</div>
+
+<div [ngClass]="statusClass6" (click)="setActiveClass6()"(cdkDragStarted)="setActiveClass6()">
+  <app-note></app-note>
+</div>

@@ -1,0 +1,8 @@
+
+<div class="app" >
+	<app-snote *ngFor="let note of data.list; let j = index" (dismiss)="deleteNote($event)" (focusout)="updateNote($event)" id="{{j}}">{{note.text}}</app-snote>
+</div>
+<div (click)="addNote()" (enter)="addNote()" tabindex="0" class="addButton">
+	+
+</div>
+

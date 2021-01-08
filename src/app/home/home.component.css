@@ -1,0 +1,63 @@
+#profilButton {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+#username {
+  display: inline-block;
+}
+
+#calculor {
+  width: 378px;
+  position: absolute;
+  top : 10px;
+  left: 120px;
+}
+
+#clock {
+  width: 100px;
+  position: absolute;
+  top : 10px;
+  left: 10px;
+}
+
+#check-list {
+  width: 400px;
+  height: 500px;
+  position: absolute;
+  top : 10px;
+  left: 508px;
+}
+
+#repertoire {
+  width: 400px;
+  height: 500px;
+  position: absolute;
+  top : 520px;
+  left: 508px;
+}
+
+
+#disconnect, #profile {
+  cursor: pointer;
+}
+
+#agenda{
+  width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#note{
+  width: 1000px;
+
+}
+
+.active{
+  z-index: 99999;
+}
+
+.not-active{
+  z-index: 0;
+}
