@@ -37,12 +37,9 @@ export class HomeComponent implements OnInit {
       this.statusClass3 = 'not-active';
       this.statusClass4 = 'not-active';
       this.statusClass5 = 'not-active';
-    }
-    /*else{
-      this.statusClass1 = 'not-active';
-    }*/
-    
+    }  
   }
+
   statusClass2 = 'not-active';
 
   setActiveClass2(){
@@ -53,10 +50,6 @@ export class HomeComponent implements OnInit {
       this.statusClass4 = 'not-active';
       this.statusClass5 = 'not-active';
     }
-    /*else{
-      this.statusClass2 = 'not-active';
-    }*/
-    
   }
 
   statusClass3 = 'not-active';
@@ -69,11 +62,8 @@ export class HomeComponent implements OnInit {
       this.statusClass2 = 'not-active';
       this.statusClass5 = 'not-active';
     }
-    /*else{
-      this.statusClass3 = 'not-active';
-    }*/
-    
   }
+
   statusClass4 = 'not-active';
 
   setActiveClass4(){
@@ -84,11 +74,8 @@ export class HomeComponent implements OnInit {
       this.statusClass1 = 'not-active';
       this.statusClass5 = 'not-active';
     }
-    /*else{
-      this.statusClass4 = 'not-active';
-    }*/
-    
   }
+
   statusClass5 = 'not-active';
 
   setActiveClass5(){
@@ -99,10 +86,19 @@ export class HomeComponent implements OnInit {
       this.statusClass3 = 'not-active';
       this.statusClass4 = 'not-active';
     }
-    /*else{
+  }
+
+  statusClass6 = 'not-active';
+
+  setActiveClass6(){
+    if(this.statusClass6 == 'not-active'){
+      this.statusClass6 = 'active';
+      this.statusClass1 = 'not-active';
+      this.statusClass2 = 'not-active';
+      this.statusClass3 = 'not-active';
+      this.statusClass4 = 'not-active';
       this.statusClass5 = 'not-active';
-    }*/
-    
+    }
   }
 
 }

@@ -48,8 +48,10 @@
   <app-agenda></app-agenda>
 </div>
 
-
+<div [ngClass]="statusClass6" (click)="setActiveClass6()" (cdkDragStarted)="setActiveClass6()">
   <app-note></app-note>
+</div>
+
 
 
 
