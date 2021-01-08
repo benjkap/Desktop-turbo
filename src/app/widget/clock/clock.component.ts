@@ -20,8 +20,8 @@ export class ClockComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('mycanvas', {static: false, read: ElementRef}) canvasRef: ElementRef;
   public tdate = new Date();
-  @Input() public width = 100;
-  @Input() public height = 100;
+  @Input() public width = 200;
+  @Input() public height = 200;
   canvasContext: CanvasRenderingContext2D;
   subscription: Subscription;
 
@@ -114,7 +114,7 @@ export class ClockComponent implements OnInit, OnDestroy, AfterViewInit {
           tap(t => {
             canvasContext.clearRect($this.width / 2 * -1, $this.height / 2 * -1, $this.height, $this.width);
             date = new Date(date.setSeconds(date.getSeconds() + 1));
-            canvasContext.drawImage(background, -50, -50, 100, 100);
+            canvasContext.drawImage(background, -100, -100, $this.width, $this.height);
             $this.drawTime(canvasContext, innerRadius, date);
           })
         )
