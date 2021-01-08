@@ -111,7 +111,6 @@ export class CheckListComponent implements OnInit, OnChanges {
 
   async ngOnInit(): Promise<void> {
     this.data = await this.getList();
-    console.log(this.data);
   }
 
   ngOnChanges(): any {

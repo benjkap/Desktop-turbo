@@ -1,59 +1,122 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import {AuthService} from '../service/auth/auth.service';
+import {Http} from '@angular/http';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-profil',
   templateUrl: './profil.component.html',
   styleUrls: ['./profil.component.scss']
 })
-export class ProfilComponent implements OnInit {
+export class ProfilComponent implements OnInit, OnChanges{
 
   constructor(
+    private http: Http,
     private authService: AuthService
   ) {
   }
 
   user = this.authService.getUserDetails();
 
-  @Input() username  = this.user.username;
-  @Input() email = this.user.adress;
-  @Input() wallpaper = '/images/wallpaper.jpg';
+  username  = this.user.username;
+  email = this.user.adress;
+  wallpaper = '/images/wallpaper.jpg';
 
-  isUsernameModif = 'false';
-  isEmailModif = 'false';
-  isWallpaperModif = 'false';
 
-  isNewSave = 'false';
+  private static error(error: any) {
+    const message = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(message);
+  }
 
-  activeModif(elt: string){
-    this.isUsernameModif = 'false';
-    this.isEmailModif = 'false';
-    this.isWallpaperModif = 'false';
-    switch (elt) {
-      case 'username': { this.isUsernameModif = 'true'; break; }
-      case 'email': { this.isEmailModif = 'true'; break; }
-      case 'wallpaper': { this.isWallpaperModif = 'true'; break; }
+  public ucFirst(str: string){
+    return str.substr(0, 1).toUpperCase() + str.substr(1);
+  }
+
+  public async getUsername() {
+    return await this.http.post('/api/profile/username', {token: this.authService.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(ProfilComponent.error);
+  }
+
+  public async getAdress() {
+    return await this.http.post('/api/profile/address', {token: this.authService.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(ProfilComponent.error);
+  }
+
+  public async getBackground() {
+    return await this.http.post('/api/profile/background', {token: this.authService.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(ProfilComponent.error);
+  }
+
+  private errorAlert(msg: string) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-start',
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      }
+    });
+
+    Toast.fire({
+      icon: 'error',
+      title: msg
+    });
+  }
+
+  public async updateUsername(data) {
+    const result = await this.http.post('/api/profile/username', {token: this.authService.getToken(), data: data})
+      .toPromise()
+      .then(response => response.json())
+      .catch(ProfilComponent.error);
+    if (result === 'userIsFree') {
+      await this.authService.updateToken();
+      this.user = this.authService.getUserDetails();
+    } else {
+      this.errorAlert('Nom d\'utilisateur déjà utilisé');
+      this.username = result;
     }
+
   }
 
-  saveChanges(){
-    this.isUsernameModif = 'false';
-    this.isEmailModif = 'false';
-    this.isWallpaperModif = 'false';
-    this.isNewSave = 'true';
-    setTimeout(
-      () => {
-        this.isNewSave = 'false';
-      }, 700
-    );
-
-    // Stocker l'ensemble des données dans la BDD
+  public async updateAdress(data) {
+    await this.http.post('/api/profile/address', {token: this.authService.getToken(), data: data})
+      .toPromise()
+      .then(response => response.json())
+      .catch(ProfilComponent.error);
+    await this.authService.updateToken();
+    this.user = this.authService.getUserDetails();
   }
 
-  ngOnInit() {
-    this.username  = this.user.username;
-    this.email = this.user.adress;
-    this.wallpaper = '/images/wallpaper.jpg';
+  public async updateBackground(data) {
+    await this.http.post('/api/profile/background', {token: this.authService.getToken(), data: data})
+      .toPromise()
+      .then(response => response.json())
+      .catch(ProfilComponent.error);
+    await this.authService.updateToken();
+    this.user = this.authService.getUserDetails();
+  }
+
+  public logout() {
+    this.authService.logout();
+  }
+
+  async ngOnInit() {
+    this.username  = await this.getUsername();
+    this.email = await this.getAdress();
+    this.wallpaper = await this.getBackground();
+  }
+
+  ngOnChanges() {
   }
 
 }

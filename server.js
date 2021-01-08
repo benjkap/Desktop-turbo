@@ -69,9 +69,34 @@ let server = app.listen(process.env.PORT || LOCAL_PORT, function () {
   console.log("App now running on port", port);
 });
 app.get("/api/status", function (req, res) {
-  res.status(199).json({status: "UP"});
+  res.status(196).json({status: "UP"});
 });
 
+app.post("/api/token", function (req, res) {
+
+  let token = req.body.token;
+  if(token === undefined){
+    manageError(res, "Invalid product input", "token is mandatory.", 402);
+  } else{
+    let userDetails;
+    userDetails = getUserDetails(token);
+    User.findOne({_id: userDetails._id}, function (err, user) {
+      if (err) {
+        console.log("unknown error");
+        res.status(197).json('false');
+      } else if (!user) {
+        console.log("user not found");
+        res.status(198).json('false');
+      } else {
+        console.log('ça marche');
+        let token = user.generateJwt();
+        res.status(260).json(token);
+      }
+    });
+
+  }
+
+});
 
 app.post("/api/login", function (req, res) {
 
@@ -143,19 +168,21 @@ app.post("/api/register", function (req, res) {
         res.status(205).json(true);
       }
     });
-  }});
+  }
+});
+
 app.post("/api/check_list", function (req, res) {
 
-  let token= req.body.token;
+  let token = req.body.token;
   let data = req.body.data;
-  if(token === undefined){
+  if (token === undefined) {
     manageError(res, "Invalid product input", "token is mandatory.", 399);
     return;
   }
   let userDetails;
   userDetails = getUserDetails(token);
-  if(data === undefined){
-    User.findOne({username: userDetails.username}, function (err, user) {
+  if (data === undefined) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
       if (err) {
         console.log("unknown error");
         res.status(207).json('unknown');
@@ -164,11 +191,10 @@ app.post("/api/check_list", function (req, res) {
         res.status(208).json(user.widgetList.toDoList);
       }
     });
-  }
-  else {
+  } else {
     console.log("update de la check_list ", data);
     //ici traitement pré requete
-    User.findOne({username: userDetails.username}, function (err, user) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
       if (err) {
         console.log("unknown error");
         res.status(209).json('unknown');
@@ -178,7 +204,7 @@ app.post("/api/check_list", function (req, res) {
           if (err) {
             console.error(err);
             res.status(210).json(false);
-          }else {
+          } else {
             console.log(userDetails.username + " ajouté à la collection.");
             res.status(211).json(true);
           }
@@ -191,148 +217,144 @@ app.post("/api/check_list", function (req, res) {
 
 app.post("/api/profile/username", function (req, res) {
 
-  let token= req.body.token;
+  let token = req.body.token;
   let data = req.body.data;
-  if(token === undefined){
+  if (token === undefined) {
     manageError(res, "Invalid product input", "Name is mandatory.", 400);
     return;
   }
   let userDetails;
   userDetails = getUserDetails(token);
-  if(data === undefined){
-    User.findOne({username: userDetails.username}, function (err, user) {
+  if (data === undefined) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
       if (err) {
         console.log("unknown error");
         res.status(212).json('unknown');
-        return;
       } else {
         res.status(213).json(user.username);
       }
     });
-  }
-  else {
+  } else {
     //ici traitement pré requete
-    User.findOne({username: userDetails.username}, function (err, user) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
       if (err) {
         console.log("unknown error");
-        res.status(214).json('unknown');
-        return;
+        res.status(214).json(userDetails.username);
       } else {
         user.username = data;
         user.save(function (err, user) {
           if (err) {
             console.error(err);
-            res.status(215).json(false);
+            res.status(215).json(userDetails.username);
+          } else {
+            User.findOne({username: user.username}, function (err, user) {
+              if (user || err) {
+                console.log(userDetails.username + " ajouté à la collection.");
+                res.status(271).json('userIsFree');
+              }
+              else { res.status(270).json(userDetails.username); }
+            });
           }
-          console.log(userDetails.username + " ajouté à la collection.");
-          res.status(216).json(true);
-
         });
 
       }
     });
   }
 });
+
 app.post("/api/profile/address", function (req, res) {
 
-  let token= req.body.token;
+  let token = req.body.token;
   let data = req.body.data;
-  if(token === undefined){
+  if (token === undefined) {
     manageError(res, "Invalid product input", "Name is mandatory.", 400);
     return;
   }
   let userDetails;
   userDetails = getUserDetails(token);
-  if(data === undefined){
-    User.findOne({username: userDetails.username}, function (err, user) {
+  if (data === undefined) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
       if (err) {
         console.log("unknown error");
         res.status(217).json('unknown');
-        return;
       } else {
         res.status(218).json(user.adress);
       }
     });
-  }
-  else {
+  } else {
     //ici traitement pré requete
-    User.findOne({username: userDetails.username}, function (err, user) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
       if (err) {
         console.log("unknown error");
         res.status(219).json('unknown');
-        return;
       } else {
-        user.address = data;
+        user.adress = data;
         user.save(function (err, user) {
           if (err) {
             console.error(err);
             res.status(220).json(false);
+          } else {
+            console.log(userDetails.username + " ajouté à la collection.");
+            res.status(221).json(true);
           }
-          console.log(userDetails.username + " ajouté à la collection.");
-          res.status(221).json(true);
-
         });
 
       }
     });
   }
 });
-app.post("/api/profile/password", function (req, res) {
+app.post("/api/profile/background", function (req, res) {
 
-  let token= req.body.token;
+  let token = req.body.token;
   let data = req.body.data;
-  if(token === undefined){
+  if (token === undefined) {
     manageError(res, "Invalid product input", "Name is mandatory.", 400);
     return;
   }
   let userDetails;
   userDetails = getUserDetails(token);
-  if(data === undefined){
-    User.findOne({username: userDetails.username}, function (err, user) {
+  if (data === undefined) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
       if (err) {
         console.log("unknown error");
         res.status(222).json('unknown');
-        return;
       } else {
         res.status(223).json(user.background);
       }
     });
-  }
-  else {
+  } else {
     //ici traitement pré requete
-    User.findOne({username: userDetails.username}, function (err, user) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
       if (err) {
         console.log("unknown error");
         res.status(224).json('unknown');
-        return;
       } else {
         user.background = data;
         user.save(function (err, user) {
           if (err) {
             console.error(err);
             res.status(225).json(false);
+          } else {
+            console.log(userDetails.username + " ajouté à la collection.");
+            res.status(226).json(true);
           }
-          console.log(userDetails.username + " ajouté à la collection.");
-          res.status(226).json(true);
-
         });
-
       }
     });
   }
 });
 app.post("/api/clock", function (req, res) {
 
-  let token= req.body.token;
+  let token = req.body.token;
   let data = req.body.data;
-  if(token === undefined){
+  if (token === undefined) {
     manageError(res, "Invalid product input", "token is mandatory.", 401);
     return;
   }
   let userDetails;
   userDetails = getUserDetails(token);
-  if(data === undefined){
-    User.findOne({username: userDetails.username}, function (err, user) {
+  if (data === undefined) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
       if (err) {
         console.log("unknown error");
         res.status(227).json('unknown');
@@ -340,11 +362,10 @@ app.post("/api/clock", function (req, res) {
         res.status(228).json(user.widgetList.clock);
       }
     });
-  }
-  else {
+  } else {
     console.log("update de la check_list ", data);
     //ici traitement pré requete
-    User.findOne({username: userDetails.username}, function (err, user) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
       if (err) {
         console.log("unknown error");
         res.status(229).json('unknown');
@@ -363,44 +384,42 @@ app.post("/api/clock", function (req, res) {
     });
   }
 });
+
 app.post("/api/agenda", function (req, res) {
 
-  let token= req.body.token;
+  let token = req.body.token;
   let data = req.body.data;
-  if(token === undefined){
+  if (token === undefined) {
     manageError(res, "Invalid product input", "token is mandatory.", 402);
     return;
   }
   let userDetails;
   userDetails = getUserDetails(token);
-  if(data === undefined){
-    User.findOne({username: user.username}, function (err, user) {
+  if (data === undefined) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
       if (err) {
         console.log("unknown error");
         res.status(232).json('unknown');
-        return;
       } else {
         res.status(233).json(userDetails.widgetList.calendar);
       }
     });
-  }
-  else {
+  } else {
     //ici traitement pré requete
-    User.findOne({username: userDetails.username}, function (err, user) {
+    User.findOne({_id: userDetails._id}, function (err, user) {
       if (err) {
         console.log("unknown error");
         res.status(234).json('unknown');
-        return;
       } else {
         user.setCalendar(data);
         user.save(function (err, user) {
           if (err) {
             console.error(err);
             res.status(235).json(false);
+          } else {
+            console.log(userDetails.username + " a été update");
+            res.status(236).json(true);
           }
-          console.log(userDetails.username + " a été update");
-          res.status(236).json(true);
-
         });
 
       }
@@ -426,8 +445,8 @@ function manageError(res, reason, message, code) {
   console.log("Error: " + reason);
   res.status(code || 500).json({"error": message});
 }
-function getUserDetails(token)
-{
+
+function getUserDetails(token) {
   let payload;
   if (token) {
     payload = token.split('.')[1];

@@ -125,6 +125,25 @@ export class AuthService {
     });
   }
 
+  private updateAlert(succes: boolean) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-start',
+      showConfirmButton: false,
+      timer: 8000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      }
+    });
+
+    Toast.fire({
+      icon: (succes) ? 'success'  : 'error',
+      title: (succes) ? 'Profil mis à jour!' : 'Erreur de la mise à jour du profil'
+    });
+  }
+
   public async login(loginForm: any): Promise<any> {
     if (loginForm.remember) {
       this.setCookie('DT_username', loginForm.username, 365 * 24 * 60);
@@ -157,6 +176,19 @@ export class AuthService {
       .catch(AuthService.error);
     await this.router.navigate(['/login']);
     return req;
+  }
+
+  public async updateToken() {
+    const result = await this.http.post('/api/token', {token: this.getToken()})
+      .toPromise()
+      .then(response => response.json())
+      .catch(AuthService.error);
+    if (result) {
+      this.saveToken(result);
+      this.updateAlert(true);
+    } else { this.updateAlert(false); }
+
+
   }
 
   public logout(): void {

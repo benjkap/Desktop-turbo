@@ -59,7 +59,6 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
   ],
 
   entryComponents: [DragDropComponent],
-
   providers: [AuthService, DatePipe],
   bootstrap: [AppComponent]
 })
