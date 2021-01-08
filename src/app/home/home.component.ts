@@ -1,5 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {Component, Input, OnInit, NgModule} from '@angular/core';
+import {Component, OnInit, OnDestroy, NgModule} from '@angular/core';
 import {AuthService} from '../service/auth/auth.service';
 import {Http} from '@angular/http';
 import {DragDropModule, CdkDragDrop, CdkDragEnd, CdkDragMove} from '@angular/cdk/drag-drop';
