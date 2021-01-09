@@ -24,14 +24,11 @@ var calendarSchema = new mongoose.Schema({
 });
 mongoose.model('calendarSchema',calendarSchema ,);
 
-var toDoListSchema = new mongoose.Schema({
-  Array:[{name:String,
-  subString:[{
-    name: String,
-    valid :Boolean
-  }]}]
+var taskSchema = new mongoose.Schema({
+      name: String,
+      valid :Boolean
 });
-mongoose.model('toDoListSchema', toDoListSchema,);
+mongoose.model('taskSchema', taskSchema,);
 
 var contactSchema = new mongoose.Schema({
   name : String,
@@ -72,7 +69,7 @@ var widgetListSchema = new mongoose.Schema({
       },
 
   toDoList :{
-    category : [{name: String, list :{type : toDoListSchema}}],
+    category : [{name: String, subString :[{type : taskSchema}]}],
     isShown : { type :Boolean,default : true },
     coordinates : {type : coordinatesSchema}
       },

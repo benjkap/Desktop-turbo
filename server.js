@@ -175,6 +175,8 @@ app.post("/api/check_list", function (req, res) {
 
   let token = req.body.token;
   let data = req.body.data;
+  console.log(data);
+
   if (token === undefined) {
     manageError(res, "Invalid product input", "token is mandatory.", 512);
     return;
@@ -192,7 +194,6 @@ app.post("/api/check_list", function (req, res) {
       }
     });
   } else {
-    console.log("update de la check_list ", data);
     //ici traitement pré requete
     User.findOne({_id: userDetails._id}, function (err, user) {
       if (err) {
