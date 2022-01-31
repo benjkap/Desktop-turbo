@@ -28,39 +28,37 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    HomeComponent,
-    RegisterComponent,
-    AgendaComponent,
-    NoteComponent,
-    SnoteComponent,
-    DragDropComponent,
-    RegisterComponent,
-    ClockComponent,
-    CalculatorComponent,
-    ProfilComponent,
-    CheckListComponent,
-    RepertoireComponent,
-    AdminPanelComponent
-  ],
-  imports: [
-    FormsModule,
-    BrowserModule,
-    AppRoutingModule,
-    HttpModule,
-    ReactiveFormsModule,
-    ScheduleAllModule,
-    RecurrenceEditorAllModule,
-    DragDropModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-
-  entryComponents: [DragDropComponent],
-  providers: [AuthService, DatePipe],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        HomeComponent,
+        RegisterComponent,
+        AgendaComponent,
+        NoteComponent,
+        SnoteComponent,
+        DragDropComponent,
+        RegisterComponent,
+        ClockComponent,
+        CalculatorComponent,
+        ProfilComponent,
+        CheckListComponent,
+        RepertoireComponent,
+        AdminPanelComponent
+    ],
+    imports: [
+        FormsModule,
+        BrowserModule,
+        AppRoutingModule,
+        HttpModule,
+        ReactiveFormsModule,
+        ScheduleAllModule,
+        RecurrenceEditorAllModule,
+        DragDropModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
+    providers: [AuthService, DatePipe],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

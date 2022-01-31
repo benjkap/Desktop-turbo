@@ -5,7 +5,7 @@ import {AuthService} from '../../service/auth/auth.service';
 @Component({
   selector: 'app-repertoire',
   templateUrl: './repertoire.component.html',
-  styleUrls: ['./repertoire.component.scss']
+  styleUrls: ['./repertoire.component.css']
 })
 export class RepertoireComponent implements OnInit {
 
